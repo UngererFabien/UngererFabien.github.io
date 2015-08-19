@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles/styles.css">
+
+  <script type="text/javascript" src="/js/libs/jquery-2.1.3.js"></script>
+  <script type="text/javascript" src="/js/libs/underscore.js"></script>
+  <script type="text/javascript" src="/js/libs/d3/d3.js"></script>
+  <script type="text/javascript" src="/js/libs/d3/d3.chart.js"></script>
+
+  <script type="text/javascript" src="/js/Bar.js"></script>
+</head>
+<body>
+  <div class="chart"></div>
+
+  <script type="text/javascript">
+    var chart = d3.select('.chart')
+        .append('svg')
+        .attr('width', 500)
+        .attr('height', 300)
+        .chart('BarChart');
+
+    function rData () {
+      var points = [];
+      for (time = 0; time < 10; time++) {
+        points.push({
+          value: Math.round(1000*(Math.random()+1)),
+          label: time+1,
+          id: time
+        });
+     };
+     return points;
+    };
+
+    var dataset = rData();
+    chart.draw(rData());
+
+    setInterval(function () {
+        dataset.shift();
+        dataset.push({
+          value: Math.round(1000*(Math.random()+1)),
+          id: ++time,
+          label: time+1
+        });
+
+       chart.draw(dataset);
+    }, 2000);
+  </script>
+</body>
+</html>

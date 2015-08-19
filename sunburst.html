@@ -1,0 +1,100 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <script type="text/javascript" src="/js/libs/underscore.js"></script>
+
+    <script type="text/javascript" src="/js/libs/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="/js/libs/underscore.js"></script>
+    <script type="text/javascript" src="/js/libs/d3/d3.js"></script>
+    <script type="text/javascript" src="/js/libs/d3/d3.chart.js"></script>
+
+    <script type="text/javascript" src="/js/Sunburst.js"></script>
+  </head>
+  <body>
+    <div class="chart"></div>
+
+    <script type="text/javascript">
+      var chart = d3.select('.chart')
+        .append('svg')
+        .attr('width', 500)
+        .attr('height', 500)
+        .chart('SunburstChart');
+
+      function rData () {
+        var categories = {
+          id: 'categories',
+          children: []
+        },
+          maxTrue = Math.round(Math.random()*500)+300,
+          maxFalse = Math.round(Math.random()*5000)+1000;
+
+        for (var i = 0; i < 5; i++) {
+          var category = {
+            id: 'c'+i,
+            children: []
+          }
+
+          var nbSubCat = Math.round(Math.random()*3)+1;
+          var nbEndSubCat = Math.round(Math.random()*4)+1;
+          for (var j = 0; j < nbSubCat + nbEndSubCat; j++) {
+            var subCategory;
+
+            if(j > nbSubCat) {
+              subCategory = {
+                id: 'c'+i+'s'+j, 
+                value: Math.round(Math.random()*3000) + 2000
+              }
+            } else {
+              subCategory = {
+                id: 'c'+i+'s'+j,
+                children: [
+                  {id: 'c'+i+'s'+j+'_a', value: Math.round(Math.random()*500)+300},
+                  {id: 'c'+i+'s'+j+'_b', value: Math.round(Math.random()*5000)+1000}
+                ]
+              }
+            }
+
+            category.children.push(subCategory);
+          }
+
+          categories.children.push(category);
+
+        }
+
+        for (var n = 0; n < 3; n++) {
+          categories.children.push({
+            id: '_n'+n,
+            value: Math.round(Math.random()*7000) + 3000
+          });
+        }
+
+        return categories;
+      };
+
+      function updateRandomData (rDataPoint) {
+        if(rDataPoint.children){
+          for (var i = rDataPoint.children.length - 1; i >= 0; i--) {
+            updateRandomData(rDataPoint.children[i])
+          };
+        } else {
+          var randomValue = Math.round(Math.random()*200)-100;
+          if(rDataPoint.value > randomValue) {
+            rDataPoint.value -= randomValue;
+          } else rDataPoint.value = 0
+        }
+      } 
+
+      var randomData = rData();
+      chart.draw(randomData);
+
+      setInterval(function () {
+        updateRandomData(randomData);
+        chart.draw(randomData)
+      }, 1000)
+
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,100 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <script type="text/javascript" src="/js/libs/underscore.js"></script>
+
+    <script type="text/javascript" src="/js/libs/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="/js/libs/underscore.js"></script>
+    <script type="text/javascript" src="/js/libs/d3/d3.js"></script>
+    <script type="text/javascript" src="/js/libs/d3/d3.chart.js"></script>
+
+    <script type="text/javascript" src="/js/Bubbles.js"></script>
+  </head>
+  <body>
+    <div class="chart"></div>
+
+    <script type="text/javascript">
+      var chart = d3.select('.chart')
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500)
+      .chart('BubblesChart');
+
+      function rData () {
+        var categories = {
+          id: 'categories',
+          _children: []
+        },
+          maxTrue = Math.round(Math.random()*500)+300,
+          maxFalse = Math.round(Math.random()*5000)+1000;
+
+        for (var i = 0; i < 5; i++) {
+          var category = {
+            id: 'c'+i,
+            _children: []
+          }
+
+          var nbSubCat = Math.round(Math.random()*7)+1;
+          for (var j = 0; j < nbSubCat; j++) {
+            var subCategory = {
+              id: 'c'+i+'s'+j,
+              _children: [
+                {id: 'c'+i+'s'+j+'_true', converted: true, value: Math.round(Math.random()*500)+300},
+                {id: 'c'+i+'s'+j+'_false', converted: false, value: Math.round(Math.random()*5000)+1000}
+              ]
+            }
+
+            category._children.push(subCategory);
+          }
+
+          categories._children.push(category);
+
+        }
+
+        return categories;
+      };
+
+      function sumChildren (children, id) {
+        var _true = 0, _false = 0;
+
+        for (var i = children.length - 1; i >= 0; i--) {
+          if(children[i]._children) {
+            if(children[i]._children[0]._children) {
+              children[i].sumedChildren = sumChildren(children[i]._children, children[i].id);
+              _true += children[i].sumedChildren[0].value;
+              _false += children[i].sumedChildren[1].value;
+            } else {
+              for (var j = children[i]._children.length - 1; j >= 0; j--) {
+                if(children[i]._children[j].converted) {
+                  _true += children[i]._children[j].value;
+                } else _false += children[i]._children[j].value;
+              };
+            }
+          } else {
+            if(children[i].converted) {
+              _true += children[i].value;
+            } else _false += children[i].value;
+          }
+        };
+
+        return [
+          {id: id+'_sumedTrue', converted: true, value: _true},
+          {id: id+'_sumedFalse', converted: false, value: _false}
+        ];
+      }
+
+      function getCategory () {
+        //
+      }
+
+      var randomData = rData();
+      randomData.sumedChildren = sumChildren(randomData._children, randomData.id);
+
+      chart.zoom(0).draw(randomData);
+
+    </script>
+  </body>
+  </html>

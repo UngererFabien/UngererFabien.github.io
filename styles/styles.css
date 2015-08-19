@@ -1,0 +1,42 @@
+.chart {
+	margin: auto;
+	margin-top: 50px;
+	width: 500px;
+}
+
+.bar {
+	fill: steelblue;
+}
+
+.bar.default {
+	fill: steelblue;
+}
+
+.bubble {
+	fill: steelblue;
+	fill-opacity: 0.25;
+	cursor: pointer;
+}
+
+.orange {
+	fill: orange;
+}
+
+.green {
+	fill: green;
+}
+
+/*.zoomable {
+	cursor: pointer;
+	pointer-events: visibleFill;
+}*/
+
+.zoomHover {
+	stroke: steelblue;
+  	stroke-opacity: 0.5;
+}
+
+path {
+	stroke: #fff;
+	fill: steelblue;
+}
