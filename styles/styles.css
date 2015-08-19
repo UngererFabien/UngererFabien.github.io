@@ -4,6 +4,10 @@
 	width: 500px;
 }
 
+.chart.map {
+	width: 700px;
+}
+
 .bar {
 	fill: steelblue;
 }
