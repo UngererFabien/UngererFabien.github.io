@@ -13,30 +13,57 @@ d3.chart('WorldMapChart', {
       height = +canvasNode.getAttribute('height');
 
     var context = canvasNode.getContext('2d');
-    context.lineWidth = 0.5;
+    // context.lineWidth = 0.5;
+    context.lineJoin = 'round';
+    context.lineCap = 'round';
 
-    var projection = d3.geo.equirectangular()
-      .scale((width + 1) / 2 / Math.PI)
-      .translate([width / 2, height / 1.8]);
+    var initTranslate = [0, 0];
 
-    var path = d3.geo.path()
-      .projection(projection)
-      .context(context);
+    var translate, scale, area; // variables for zoom
+
+    var clip = d3.geo.clipExtent()
+      .extent([0, 0], [width, height]);
+
+    var simplify = d3.geo.transform({
+      point: function (x, y, z) {
+        if(z >= area) {
+          this.stream.point(x * scale + translate[0], y * scale + translate[1]);
+        }
+      }
+    });
 
     var zoom = d3.behavior.zoom()
-      .translate([width / 2, height / 1.8])
+      .translate(initTranslate)
       .scale(1)
       .scaleExtent([1, 8]);
 
-    d3.json('/json/world-110m.json', function (err, world) {
-      var countries = topojson.feature(world, world.objects.countries);
-      var boundary = topojson.mesh(world, world.objects.countries);
+    var path = d3.geo.path()
+      .projection({
+        stream: function (s) {
+          return simplify.stream(clip.stream(s));
+        }
+      })
+      .context(context);
+
+    d3.json('/json/world.json', function (err, world) {
+      if(err) throw err;
+
+      topojson.presimplify(world);
+
+      var sphere = topojson.feature(world, world.objects.sphere);
+      var land = topojson.feature(world, world.objects.land);
+      var boundary = topojson.mesh(world, world.objects.countries, function(a, b) {
+        return a !== b;
+      });
 
       function fillMap (translatePos) {
-        projection.translate(translatePos);
+        context.beginPath();
+        path(sphere);
+        context.fillStyle = "#fff";
+        context.fill();
 
         context.beginPath();
-        path(countries);
+        path(land);
         context.fillStyle = '#cecfd3';
         context.fill();
 
@@ -47,23 +74,22 @@ d3.chart('WorldMapChart', {
       }
 
       function renderWorld () {
-        var t = zoom.translate(),
-          s = zoom.scale();
+        translate = zoom.translate();
+        scale = zoom.scale();
+        area = 1/scale/scale;
 
-        if(t[0] > width+width/2) {
-          zoom.translate([t[0]-width, t[1]]);
-          t = zoom.translate();
-        } else if (t[0] < width/2) {
-          zoom.translate([t[0]+width, t[1]]);
-          t = zoom.translate();
-        }
+        // if(translate[0] > width+width/2) {
+        //   zoom.translate([translate[0]-width, translate[1]]);
+        // } else if (translate[0] < width/2) {
+        //   zoom.translate([translate[0]+width, translate[1]]);
+        // }
 
         context.clearRect(0, 0, width, height);
 
         context.save();
 
-        fillMap(t);
-        fillMap([t[0] > width/2 ? t[0]-width : t[0]+width, t[1]]);
+        fillMap(translate);
+        // fillMap([translate[0] > width/2 ? translate[0]-width : translate[0]+width, translate[1]]);
 
         context.restore();
       }
