@@ -40,7 +40,13 @@
   	stroke-opacity: 0.5;
 }
 
-path {
+.map path {
 	stroke: #fff;
 	fill: steelblue;
+}
+
+.line {
+	stroke: steelblue;
+	stroke-width: 1.5px;
+	fill: none;
 }
