@@ -28,7 +28,7 @@ d3.chart('WorldMapChart', {
       .scale(1)
       .scaleExtent([1, 8]);
 
-    d3.json('/json/world-110m.json', function (err, world) {
+    d3.json('./json/world-110m.json', function (err, world) {
       var countries = topojson.feature(world, world.objects.countries);
       var boundary = topojson.mesh(world, world.objects.countries);
 
