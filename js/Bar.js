@@ -26,7 +26,7 @@ d3.chart('BarChart', {
       // select the elements we wish to bind to and
       // bind the data to them.
       dataBind: function (data) {
-        console.log(data);
+        // console.log(data);
         return this.selectAll('.bar')
           .data(data, function (point, i) {
             // console.log('data bind : ', point.id, i);
@@ -142,16 +142,6 @@ d3.chart('BarChart', {
     this.scaleY.domain([0, max]);
 
     return data;
-  },
-
-  // set/get the color to use for the circles as they are
-  // rendered.
-  color: function (newColor) {
-    if (arguments.length === 0) {
-      return this._color;
-    }
-    this._color = newColor;
-    return this;
   }
 
 });

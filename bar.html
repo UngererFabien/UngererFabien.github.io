@@ -17,9 +17,9 @@
   <script type="text/javascript">
     var chart = d3.select('.chart')
         .append('svg')
-        .attr('width', 500)
-        .attr('height', 300)
-        .chart('BarChart');
+          .attr('width', 500)
+          .attr('height', 300)
+          .chart('BarChart');
 
     function rData () {
       var points = [];
@@ -34,7 +34,8 @@
     };
 
     var dataset = rData();
-    chart.draw(rData());
+    console.log(dataset);
+    chart.draw(dataset);
 
     setInterval(function () {
         dataset.shift();
@@ -46,6 +47,7 @@
 
        chart.draw(dataset);
     }, 2000);
+
   </script>
 </body>
 </html>

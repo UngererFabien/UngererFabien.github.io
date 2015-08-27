@@ -3,21 +3,23 @@ d3.chart('LineChart', {
   initialize: function () {
     var _this = this;
 
+    var margin = {bottom: 50, left: 30, top: 5, right: 10};
+
     var svg = this.base.node(),
       width = +svg.getAttribute('width'),
       height = +svg.getAttribute('height');
 
     this.x = d3.scale.linear()
-      .range([0, width]);
+      .range([0, width-margin.left-margin.right]);
 
     this.y = d3.scale.linear()
-      .range([height, 0]);
+      .range([height-margin.bottom-margin.top-1, 0]);
 
-    var xAxis = d3.svg.axis()
+    this.xAxis = d3.svg.axis()
       .scale(this.x)
       .orient('bottom');
 
-    var yAxis = d3.svg.axis()
+    this.yAxis = d3.svg.axis()
       .scale(this.y)
       .orient('left')
 
@@ -27,9 +29,13 @@ d3.chart('LineChart', {
         })
         .y(function (d) {
           return _this.y(d.y);
-        });
+        })
+        .interpolate('basis');
 
-    this.layer('Lines', this.base.append('g'), {
+    var linesElement = this.base.append('g')
+      .attr('transform', 'translate(' + (margin.left || 0) + ',' + (margin.top || 0) + ')');
+
+    this.layer('Lines', linesElement, {
 
       dataBind: function (data) {
         return this.selectAll('.line')
@@ -54,12 +60,15 @@ d3.chart('LineChart', {
       }
     });
 
-    this.base.append('svg:line')
-      .attr('x1', 0)
-      .attr('x2', width)
-      .attr('y1', height)
-      .attr('y2', height)
-      .attr('stroke', '#000');
+    this.svgXAxis = this.base.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(' + (margin.left || 0) + ',' + (height-margin.bottom-1) + ')')
+      //.call(this.xAxis);
+
+    this.svgYAxis = this.base.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(' + (margin.left || 0) + ',' + (margin.top || 0) + ' )')
+      //.call(this.yAxis);
 
   },
 
@@ -80,8 +89,13 @@ d3.chart('LineChart', {
       return [min, max];
     }
 
+    console.log(linesExtent(data, 'y'));
+
     this.x.domain(linesExtent(data, 'x'));
     this.y.domain(linesExtent(data, 'y'));
+
+    this.svgXAxis.call(this.xAxis);
+    this.svgYAxis.call(this.yAxis);
 
     return data;
   }

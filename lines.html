@@ -29,10 +29,10 @@
         for (var i = 0; i < 2; i++) {
           var line = {id: 'line_'+i, points: []};
 
-          for (var h = 1; h <= 24; h++) {
+          for (var h = 0; h <= 86 400; h++) {
             line.points.push({
               x: h,
-              y: Math.round(Math.random()*5)
+              y: Math.round(Math.random()*100)
             });
           };
 
@@ -43,6 +43,7 @@
       };
 
       var randomData = rData();
+      console.log(randomData);
       chart.draw(randomData);
 
       // setInterval(function () {
