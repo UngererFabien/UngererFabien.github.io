@@ -9,7 +9,7 @@ d3.chart('LineChart', {
       width = +svg.getAttribute('width'),
       height = +svg.getAttribute('height');
 
-    this.x = d3.scale.linear()
+    this.x = d3.time.scale()
       .range([0, width-margin.left-margin.right]);
 
     this.y = d3.scale.linear()
@@ -89,7 +89,7 @@ d3.chart('LineChart', {
       return [min, max];
     }
 
-    console.log(linesExtent(data, 'y'));
+    // console.log(linesExtent(data, 'y'));
 
     this.x.domain(linesExtent(data, 'x'));
     this.y.domain(linesExtent(data, 'y'));
