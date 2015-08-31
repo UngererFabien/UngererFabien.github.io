@@ -122,10 +122,11 @@ d3.chart('BarChart', {
 
     this.xAxis.tickValues(data.map(function (d) {return d.label}));
     this.svgXAxis.call(this.xAxis)
-      // .selectAll('text')
-      //   .attr('y', 10)
-      //   .attr('x', 15)
-      //   .attr('transform', 'rotate(30)');
+      .selectAll('text')
+        // .attr('y', 7)
+        // .attr('x', -3)
+        // .attr('transform', 'rotate(30)')
+        // .style('text-anchor', 'start');
 
     return data;
   }
