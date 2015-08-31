@@ -21,7 +21,7 @@ d3.chart('LineChart', {
 
     this.yAxis = d3.svg.axis()
       .scale(this.y)
-      .orient('left')
+      .orient('left');
 
     var svgLine = d3.svg.line()
         .x(function (d) {
@@ -53,9 +53,23 @@ d3.chart('LineChart', {
       events: {
         enter: function () {
           this.attr('d', function (line) {
-            // console.log(line);
             return svgLine(line.points);
           });
+
+          var nodeLength = this.node().getTotalLength();
+
+          this.each(function () {
+            var path = d3.select(this),
+              nodeLength = this.getTotalLength();
+
+            path.attr('stroke-dashoffset', nodeLength)
+              .attr('stroke-dasharray', nodeLength + ' ' + nodeLength)
+          });
+        },
+
+        'merge:transition': function () {
+          this.duration(3000).attr('stroke-dashoffset', 0)
+            //.ease('linear');
         }
       }
     });
