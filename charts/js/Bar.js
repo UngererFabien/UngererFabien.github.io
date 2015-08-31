@@ -64,7 +64,7 @@ d3.chart('BarChart', {
           var chart = this.chart();
 
           this.attr('x', function (point, i) {
-              return chart.scaleX(point.label) // + chart.scaleX.rangeBand()*2;
+              return chart.scaleX(point.label) + chart.scaleX.rangeBand()*2;
             }).attr('width', chart.barWidth)
             .attr('y', function (point) {
               return chart.height - margin.bottom - 1; // For animation
