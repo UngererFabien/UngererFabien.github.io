@@ -23,16 +23,19 @@
         .attr('height', 300)
         .chart('LineChart');
 
+      var nbLines = 10;
+
       function rData () {
         var lines = [];
 
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < nbLines; i++) {
           var line = {id: 'line_'+i, points: []};
+          line.random = d3.random.normal(2+i*10);
 
-          for (var h = 0; h <= 30; h++) {
+          for (var h = 0; h <= i*10; h++) {
             line.points.push({
               x: h,
-              y: Math.round(Math.random()*100)
+              y: line.random()
             });
           };
 
@@ -43,13 +46,27 @@
       };
 
       var randomData = rData();
-      console.log(randomData);
+      // console.log(randomData);
       chart.draw(randomData);
 
-      // setInterval(function () {
-      //   updateRandomData(randomData);
-      //   chart.draw(randomData)
-      // }, 1000)
+      function updateRandomData (lines) {
+        for (var i = lines.length - 1; i >= 0; i--) {
+          var line = lines[i];
+          if(line.points.length < nbLines*10) {
+            line.points.push({
+              x: line.points.length,
+              y: line.random()
+            });
+          }
+        };
+      }
+
+      setTimeout(function () {
+        setInterval(function () {
+          updateRandomData(randomData);
+          chart.draw(randomData)
+        }, 1000);
+      }, 3000);
 
     </script>
   </body>

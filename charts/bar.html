@@ -26,7 +26,7 @@
       for (time = 0; time < 10; time++) {
         points.push({
           value: Math.round(1000*(Math.random()+1)),
-          label: time+1,
+          label: 'label '+(time+1),
           id: time
         });
      };
@@ -34,15 +34,15 @@
     };
 
     var dataset = rData();
-    console.log(dataset);
+    // console.log(dataset);
     chart.draw(dataset);
 
     setInterval(function () {
-        dataset.shift();
+        // dataset.shift();
         dataset.push({
           value: Math.round(1000*(Math.random()+1)),
           id: ++time,
-          label: time+1
+          label: 'label '+(time+1)
         });
 
        chart.draw(dataset);

@@ -1,24 +1,29 @@
 d3.chart('BarChart', {
 
   initialize: function () {
+    var _this = this;
 
-    var svg = this.base.node(),
-      width = +svg.getAttribute('width'),
-      height = +svg.getAttribute('height');
+    var margin = {bottom: 50};
 
-    var nbBar = 10,
-      barSpace, barWidth, barMargin;
+    var svg = this.base.node();
+    this.width = +svg.getAttribute('width');
+    this.height = +svg.getAttribute('height');
 
-    barSpace = width / nbBar;
-    barMargin = width / ((nbBar * 2) + nbBar + 1);
-    barWidth = barMargin * 2;
-
-    this.scaleX = d3.scale.linear()
-      .domain([0, 1])
-      .range([0, barSpace]);
+    this.scaleX = d3.scale.ordinal()
+      .rangeBands([0, this.width], 0.33, 0.33);
 
     this.scaleY = d3.scale.linear()
-      .range([height, 0]);
+      .range([this.height - margin.bottom, 0]);
+
+    this.xAxis = d3.svg.axis()
+      .scale(this.scaleX)
+      .orient('bottom')
+      .tickFormat(function (d) {
+        return d;
+      })
+      .outerTickSize(0);
+      //.innerTickSize(6)
+      // .tickPadding(10);
 
     // a new group element on the base of the chart
     this.layer('VerticalBars', this.base.append('g'), {
@@ -26,10 +31,8 @@ d3.chart('BarChart', {
       // select the elements we wish to bind to and
       // bind the data to them.
       dataBind: function (data) {
-        // console.log(data);
         return this.selectAll('.bar')
           .data(data, function (point, i) {
-            // console.log('data bind : ', point.id, i);
             return point.id;
           });
       },
@@ -46,14 +49,14 @@ d3.chart('BarChart', {
             maxIndex = this.size() - 1;
 
           this.attr('x', function (point, i) {
-              return (i == maxIndex ? chart.scaleX(i + 1) : chart.scaleX(i)) + barMargin / 2;
-            }).attr('width', barWidth)
+              return chart.scaleX(point.label) // + chart.scaleX.rangeBand()*2;
+            }).attr('width', chart.scaleX.rangeBand())
             .attr('y', function (point) {
-              // return height-1; // For animation
-              return chart.scaleY(point.value) + 1;
+              return chart.height - margin.bottom - 1; // For animation
+              // return chart.scaleY(point.value) + 1;
             }).attr('height', function (point) {
-              // return 1 // For animation
-              return height - chart.scaleY(point.value);
+              return 1 // For animation
+              // return chart.height - margin.bottom - chart.scaleY(point.value);
             });
         },
 
@@ -61,47 +64,27 @@ d3.chart('BarChart', {
           var chart = this.chart();
 
           this.attr('x', function (point, i) {
-              return chart.scaleX(i + 1) + barMargin;
-            }).attr('width', barWidth)
+              return chart.scaleX(point.label) // + chart.scaleX.rangeBand()*2;
+            }).attr('width', chart.barWidth)
             .attr('y', function (point) {
-              // return height-1; // For animation
-              return chart.scaleY(point.value) + 1;
+              return chart.height - margin.bottom - 1; // For animation
+              // return chart.scaleY(point.value) + 1;
             }).attr('height', function (point) {
-              // return 1 // For animation
-              return height - chart.scaleY(point.value);
+              return 1 // For animation
+              // return chart.height - margin.bottom - chart.scaleY(point.value);
             });
 
         },
 
-        'enter:transition': function () {
-
-        },
-
-        update: function () {
-
-        },
-
-        'update:transition': function () {
-
-        },
-
-        exit: function () {
-
-        },
-
         'exit:transition': function () {
-          //console.log('exit', this);
+          // console.log('exit', this);
 
           var chart = this.chart();
 
           this.duration(1000)
             .attr('x', function (point, i) {
-              return chart.scaleX(i - 1);
+              return -chart.scaleX.rangeBand()*2;
             }).remove();
-        },
-
-        merge: function () {
-
         },
 
         'merge:transition': function () {
@@ -112,22 +95,21 @@ d3.chart('BarChart', {
           // Keep this animation for Y rescaling
           this.duration(1000)
             .attr('x', function (point, i) {
-              return chart.scaleX(i) + barMargin / 2;
-            }).attr('y', function (point) {
+              return chart.scaleX(point.label)
+            }).attr('width', chart.scaleX.rangeBand())
+            .attr('y', function (point) {
               return chart.scaleY(point.value) + 1;
             }).attr('height', function (point) {
-              return height - chart.scaleY(point.value);
+              return chart.height - margin.bottom - chart.scaleY(point.value);
             });
         }
       }
     });
 
-    this.base.append('svg:line')
-      .attr('x1', 0)
-      .attr('x2', width)
-      .attr('y1', height)
-      .attr('y2', height)
-      .attr('stroke', '#000');
+    this.svgXAxis = this.base.append('g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(' + (0) + ',' + (this.height-margin.bottom) + ')');
+
   },
 
   transform: function (data) {
@@ -135,11 +117,15 @@ d3.chart('BarChart', {
       return point.value;
     });
 
-    // this.scaleX.domain(data.map(function (point) {
-    //   return point.id;
-    // }));
-
+    this.scaleX.domain(data.map(function (d) {return d.label}));
     this.scaleY.domain([0, max]);
+
+    this.xAxis.tickValues(data.map(function (d) {return d.label}));
+    this.svgXAxis.call(this.xAxis)
+      // .selectAll('text')
+      //   .attr('y', 10)
+      //   .attr('x', 15)
+      //   .attr('transform', 'rotate(30)');
 
     return data;
   }

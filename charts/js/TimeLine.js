@@ -56,14 +56,12 @@ d3.chart('LineChart', {
             return svgLine(line.points);
           });
 
-          var nodeLength = this.node().getTotalLength();
-
           this.each(function () {
             var path = d3.select(this),
               nodeLength = this.getTotalLength();
 
             path.attr('stroke-dashoffset', nodeLength)
-              .attr('stroke-dasharray', nodeLength + ' ' + nodeLength)
+              .attr('stroke-dasharray', nodeLength + ' ' + nodeLength);
           });
         },
 

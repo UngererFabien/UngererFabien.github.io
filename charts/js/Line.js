@@ -23,6 +23,15 @@ d3.chart('LineChart', {
       .scale(this.y)
       .orient('left')
 
+    var svgEnterLine = d3.svg.line()
+      .x(function (d) {
+        return _this.x(0);
+      })
+      .y(function (d) {
+        return _this.y(d.y);
+      })
+      .interpolate('basis');
+
     var svgLine = d3.svg.line()
         .x(function (d) {
           return _this.x(d.x);
@@ -53,9 +62,38 @@ d3.chart('LineChart', {
       events: {
         enter: function () {
           this.attr('d', function (line) {
-            // console.log(line);
             return svgLine(line.points);
           });
+
+          this.each(function () {
+            var path = d3.select(this),
+              nodeLength = this.getTotalLength();
+
+            path.attr('stroke-dashoffset', nodeLength)
+              .attr('stroke-dasharray', nodeLength + ' ' + nodeLength)
+          });
+        },
+
+        // 'update': function () {
+        //   this.attr('d', function (line) {
+        //     return svgLine(line.points);
+        //   });
+
+        //   this.each(function () {
+        //     var path = d3.select(this),
+        //       nodeLength = this.getTotalLength();
+
+        //     path//.attr('stroke-dashoffset', nodeLength)
+        //       .attr('stroke-dasharray', nodeLength + ' ' + nodeLength);
+        //   });
+        // },
+
+        'merge:transition': function () {
+          // this.duration(3000).attr('d', function (line) {
+          //   return svgLine(line.points);
+          // });
+
+          this.duration(3000).attr('stroke-dashoffset', 0);
         }
       }
     });
