@@ -23,16 +23,16 @@
         .attr('height', 300)
         .chart('LineChart');
 
-      var nbLines = 10;
+      var nbLines = 2;
 
       function rData () {
         var lines = [];
 
         for (var i = 0; i < nbLines; i++) {
           var line = {id: 'line_'+i, points: []};
-          line.random = d3.random.normal(2+i*10);
+          line.random = d3.random.normal(30*100);
 
-          for (var h = 0; h <= i*10; h++) {
+          for (var h = 0; h <= i*24; h++) {
             line.points.push({
               x: h,
               y: line.random()
@@ -52,7 +52,7 @@
       function updateRandomData (lines) {
         for (var i = lines.length - 1; i >= 0; i--) {
           var line = lines[i];
-          if(line.points.length < nbLines*10) {
+          if(line.points.length < 24) {
             line.points.push({
               x: line.points.length,
               y: line.random()
@@ -65,7 +65,7 @@
         setInterval(function () {
           updateRandomData(randomData);
           chart.draw(randomData)
-        }, 1000);
+        }, 3000);
       }, 3000);
 
     </script>

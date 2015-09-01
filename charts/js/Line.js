@@ -23,15 +23,6 @@ d3.chart('LineChart', {
       .scale(this.y)
       .orient('left')
 
-    var svgEnterLine = d3.svg.line()
-      .x(function (d) {
-        return _this.x(0);
-      })
-      .y(function (d) {
-        return _this.y(d.y);
-      })
-      .interpolate('basis');
-
     var svgLine = d3.svg.line()
         .x(function (d) {
           return _this.x(d.x);
@@ -39,7 +30,7 @@ d3.chart('LineChart', {
         .y(function (d) {
           return _this.y(d.y);
         })
-        .interpolate('basis');
+        .interpolate('step');
 
     var linesElement = this.base.append('g')
       .attr('transform', 'translate(' + (margin.left || 0) + ',' + (margin.top || 0) + ')');
@@ -61,39 +52,25 @@ d3.chart('LineChart', {
       // define lifecycle events
       events: {
         enter: function () {
+          this.attr('width', 0);
+        },
+
+        merge: function () {
+          this.each(function (line) {
+            line.previousLength = this.getTotalLength();
+          });
+
           this.attr('d', function (line) {
             return svgLine(line.points);
           });
-
-          this.each(function () {
-            var path = d3.select(this),
-              nodeLength = this.getTotalLength();
-
-            path.attr('stroke-dashoffset', nodeLength)
-              .attr('stroke-dasharray', nodeLength + ' ' + nodeLength)
-          });
         },
 
-        // 'update': function () {
-        //   this.attr('d', function (line) {
-        //     return svgLine(line.points);
-        //   });
-
-        //   this.each(function () {
-        //     var path = d3.select(this),
-        //       nodeLength = this.getTotalLength();
-
-        //     path//.attr('stroke-dashoffset', nodeLength)
-        //       .attr('stroke-dasharray', nodeLength + ' ' + nodeLength);
-        //   });
-        // },
-
         'merge:transition': function () {
-          // this.duration(3000).attr('d', function (line) {
-          //   return svgLine(line.points);
-          // });
-
-          this.duration(3000).attr('stroke-dashoffset', 0);
+          this.duration(3000).attrTween('stroke-dasharray', function (line) {
+            var l = this.getTotalLength(),
+              i = d3.interpolateString(line.previousLength +',' + l, l + ',' + l);
+            return function(t) {return i(t)};
+          });
         }
       }
     });
