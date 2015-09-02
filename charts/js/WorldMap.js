@@ -6,7 +6,6 @@ d3.chart('WorldMapChart', {
     var canvas = this.base.append('canvas')
       .attr('width', 700)
       .attr('height', 500);
-      
 
     var canvasNode = canvas.node(),
       width = +canvasNode.getAttribute('width'),
@@ -17,12 +16,11 @@ d3.chart('WorldMapChart', {
     context.lineJoin = 'round';
     context.lineCap = 'round';
 
-    var initTranslate = [0, 0];
+    var initTranslate = [0, -100];
 
     var translate, scale, area; // variables for zoom
 
-    var clip = d3.geo.clipExtent()
-      // .extent([0, 0], [960, 960]);
+    var clip = d3.geo.clipExtent();
 
     var simplify = d3.geo.transform({
       point: function (x, y, z) {
@@ -45,12 +43,18 @@ d3.chart('WorldMapChart', {
       })
       .context(context);
 
+    // map generation commande : 
+    // topojson -q 1e5 --projection='width = 1080, height = 720, d3.geo.equirectangular().translate([width/2, height/2]).scale((width) / 2 / Math.PI)' countries=ne_50m_admin_0_countries.shp -o world.json
+    
+    // map.json values
+    var mapWidth = 1080,
+      mapHeight = 720;
+
     d3.json('/charts/json/world.json', function (err, world) {
       if(err) throw err;
 
       topojson.presimplify(world);
 
-      //var sphere = topojson.feature(world, world.objects.sphere);
       var land = topojson.feature(world, world.objects.countries);
       var boundary = topojson.mesh(world, world.objects.countries, function(a, b) {
         return a !== b;
@@ -58,11 +62,6 @@ d3.chart('WorldMapChart', {
 
       function fillMap (translatePos) {
         translate = translatePos;
-
-        // context.beginPath();
-        // path(sphere);
-        // context.fillStyle = "#fff";
-        // context.fill();
 
         context.beginPath();
         path(land);
@@ -80,22 +79,27 @@ d3.chart('WorldMapChart', {
         scale = zoom.scale();
         area = 1/scale/scale;
 
-        // if(zoomTranslate[0] > width+width/2) {
-        //   zoom.translate([zoomTranslate[0]-width, zoomTranslate[1]]);
-        // } else if (zoomTranslate[0] < width/2) {
-        //   zoom.translate([zoomTranslate[0]+width, zoomTranslate[1]]);
-        // }
+        console.log(zoomTranslate);
 
-        // zoomTranslate = zoom.translate();
+        if(zoomTranslate[0] > mapWidth) {
+          zoom.translate([zoomTranslate[0]-mapWidth, zoomTranslate[1]]);
+        } else if (zoomTranslate[0] < -mapWidth) {
+          zoom.translate([zoomTranslate[0]+mapWidth, zoomTranslate[1]]);
+        }
 
-        console.log(translate);
+        zoomTranslate = zoom.translate();
 
         context.clearRect(0, 0, width, height);
 
         context.save();
 
         fillMap(zoomTranslate);
-        // fillMap([zoomTranslate[0] > width/2 ? zoomTranslate[0]-width : zoomTranslate[0]+width, zoomTranslate[1]]);
+
+        if(zoomTranslate[0] > 0) {
+          fillMap([zoomTranslate[0]-mapWidth, zoomTranslate[1]]);
+        } else {
+          fillMap([zoomTranslate[0]+mapWidth, zoomTranslate[1]]);
+        }
 
         context.restore();
       }
