@@ -1,3 +1,7 @@
+body {
+  font: 10px sans-serif;
+}
+
 .chart {
 	margin: auto;
 	margin-top: 50px;
@@ -40,7 +44,20 @@
   	stroke-opacity: 0.5;
 }
 
-path {
+.map path {
 	stroke: #fff;
 	fill: steelblue;
+}
+
+.line {
+	stroke: steelblue;
+	stroke-width: 1.5px;
+	fill: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #6e6e6e;
+  shape-rendering: crispEdges;
 }

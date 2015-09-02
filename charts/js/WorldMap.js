@@ -13,7 +13,7 @@ d3.chart('WorldMapChart', {
       height = +canvasNode.getAttribute('height');
 
     var context = canvasNode.getContext('2d');
-    // context.lineWidth = 0.5;
+    context.lineWidth = 0.5;
     context.lineJoin = 'round';
     context.lineCap = 'round';
 
@@ -22,7 +22,7 @@ d3.chart('WorldMapChart', {
     var translate, scale, area; // variables for zoom
 
     var clip = d3.geo.clipExtent()
-      .extent([0, 0], [width, height]);
+      // .extent([0, 0], [960, 960]);
 
     var simplify = d3.geo.transform({
       point: function (x, y, z) {
@@ -45,22 +45,24 @@ d3.chart('WorldMapChart', {
       })
       .context(context);
 
-    d3.json('/json/world.json', function (err, world) {
+    d3.json('/charts/json/world.json', function (err, world) {
       if(err) throw err;
 
       topojson.presimplify(world);
 
-      var sphere = topojson.feature(world, world.objects.sphere);
-      var land = topojson.feature(world, world.objects.land);
+      //var sphere = topojson.feature(world, world.objects.sphere);
+      var land = topojson.feature(world, world.objects.countries);
       var boundary = topojson.mesh(world, world.objects.countries, function(a, b) {
         return a !== b;
       });
 
       function fillMap (translatePos) {
-        context.beginPath();
-        path(sphere);
-        context.fillStyle = "#fff";
-        context.fill();
+        translate = translatePos;
+
+        // context.beginPath();
+        // path(sphere);
+        // context.fillStyle = "#fff";
+        // context.fill();
 
         context.beginPath();
         path(land);
@@ -74,22 +76,26 @@ d3.chart('WorldMapChart', {
       }
 
       function renderWorld () {
-        translate = zoom.translate();
+        var zoomTranslate = zoom.translate();
         scale = zoom.scale();
         area = 1/scale/scale;
 
-        // if(translate[0] > width+width/2) {
-        //   zoom.translate([translate[0]-width, translate[1]]);
-        // } else if (translate[0] < width/2) {
-        //   zoom.translate([translate[0]+width, translate[1]]);
+        // if(zoomTranslate[0] > width+width/2) {
+        //   zoom.translate([zoomTranslate[0]-width, zoomTranslate[1]]);
+        // } else if (zoomTranslate[0] < width/2) {
+        //   zoom.translate([zoomTranslate[0]+width, zoomTranslate[1]]);
         // }
+
+        // zoomTranslate = zoom.translate();
+
+        console.log(translate);
 
         context.clearRect(0, 0, width, height);
 
         context.save();
 
-        fillMap(translate);
-        // fillMap([translate[0] > width/2 ? translate[0]-width : translate[0]+width, translate[1]]);
+        fillMap(zoomTranslate);
+        // fillMap([zoomTranslate[0] > width/2 ? zoomTranslate[0]-width : zoomTranslate[0]+width, zoomTranslate[1]]);
 
         context.restore();
       }
