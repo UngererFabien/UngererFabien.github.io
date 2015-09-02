@@ -30,7 +30,7 @@
 
         for (var i = 0; i < nbLines; i++) {
           var line = {id: 'line_'+i, points: []};
-          line.random = d3.random.normal(30*100);
+          line.random = d3.random.normal(50);
 
           for (var h = 0; h <= i*24; h++) {
             line.points.push({
