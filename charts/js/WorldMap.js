@@ -90,8 +90,6 @@ d3.chart('WorldMapChart', {
         scale = zoom.scale();
         area = 1/scale/scale;
 
-        console.log(scale);
-
         if(zoomTranslate[0] > mapWidth*scale) {
           zoom.translate([zoomTranslate[0]-mapWidth, zoomTranslate[1]]);
         } else if (zoomTranslate[0] < -mapWidth*scale) {
