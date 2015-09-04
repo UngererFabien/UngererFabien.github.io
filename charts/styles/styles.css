@@ -12,6 +12,10 @@ body {
 	width: 700px;
 }
 
+.chart.map svg, .chart.map canvas {
+	position: absolute;
+} 
+
 .bar {
 	fill: steelblue;
 }
@@ -34,6 +38,12 @@ body {
 	fill: green;
 }
 
+.night {
+  /*stroke: steelblue;*/
+  fill: steelblue;
+  fill-opacity: .3;
+}
+
 /*.zoomable {
 	cursor: pointer;
 	pointer-events: visibleFill;
@@ -42,11 +52,6 @@ body {
 .zoomHover {
 	stroke: steelblue;
   	stroke-opacity: 0.5;
-}
-
-.map path {
-	stroke: #fff;
-	fill: steelblue;
 }
 
 .line {
