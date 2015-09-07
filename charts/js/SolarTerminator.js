@@ -149,27 +149,49 @@ d3.chart('SolarTerminatorChart', {
 
     var circle = d3.geo.circle().angle(90);
 
-    var night = chart.svg.append('path').attr('class', 'night');
+    function nigthPath () {
+      return chart.svg
+        .append('path').attr('class', 'night')
+    }
+
+    var nights = [nigthPath(), nigthPath()];
+
+    var date = new Date();
 
     function drawNight () {
-      night.datum(circle.origin(antipode(solarPosition(new Date))))
-        .attr('d', path);
+      var zoomTranslate = chart.zoom.translate(),
+        zoomScale = chart.zoom.scale();
+
+      projection.scale(initScale*zoomScale);
+
+      for (var i = nights.length - 1; i >= 0; i--) {
+        var night = nights[i];
+
+        if(zoomTranslate[0] > 0) {
+          projection.translate([
+            (zoomTranslate[0]+ (map.width/2)*zoomScale) - map.width*i*zoomScale,
+            (zoomTranslate[1] + (map.height/2)*zoomScale)
+          ])
+        } else {
+          projection.translate([
+            (zoomTranslate[0]+ (map.width/2)*zoomScale) + map.width*i*zoomScale,
+            (zoomTranslate[1] + (map.height/2)*zoomScale)
+          ])
+        }
+
+        night.datum(circle.origin(antipode(solarPosition(date))))
+          .attr('d', path);
+      };
     }
 
     drawNight();
-    setInterval(drawNight, 1000);
 
-    chart.zoom.on('zoom.night', function () {
-      var zoomTranslate = chart.zoom.translate(),
-        zoomScale = chart.zoom.scale();
-      projection.translate([
-          (zoomTranslate[0]+ (map.width/2)*zoomScale),
-          (zoomTranslate[1] + (map.height/2)*zoomScale)
-        ])
-      projection.scale(initScale*zoomScale);
+    setInterval(function () {
+      date = new Date();
+      drawNight()
+    }, 1000);
 
-      drawNight();
-    })
+    chart.zoom.on('zoom.night', drawNight);
   },
 
   transform: function (data) {
