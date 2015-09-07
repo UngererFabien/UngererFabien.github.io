@@ -37,6 +37,17 @@ d3.chart('SolarTerminatorChart', {
       .scale(1)
       .scaleExtent([1, 8]);
 
+
+    this.svg.call(this.zoom.on('zoom', function () {
+      var zoomTranslate = _this.zoom.translate();
+
+      if(zoomTranslate[0] > map.width*chart.scale) {
+        _this.zoom.translate([zoomTranslate[0]-map.width, zoomTranslate[1]]);
+      } else if (zoomTranslate[0] < -map.width*chart.scale) {
+        _this.zoom.translate([zoomTranslate[0]+map.width, zoomTranslate[1]]);
+      }
+    }));
+
     this.renderWorld(map);
     this.renderSolarTerminator(map, initTranslate);
 
@@ -104,12 +115,6 @@ d3.chart('SolarTerminatorChart', {
         var zoomTranslate = chart.zoom.translate();
         chart.scale = chart.zoom.scale();
         chart.area = 1/chart.scale/chart.scale;
-
-        if(zoomTranslate[0] > mapWidth*chart.scale) {
-          chart.zoom.translate([zoomTranslate[0]-mapWidth, zoomTranslate[1]]);
-        } else if (zoomTranslate[0] < -mapWidth*chart.scale) {
-          chart.zoom.translate([zoomTranslate[0]+mapWidth, zoomTranslate[1]]);
-        }
 
         zoomTranslate = chart.zoom.translate();
 
