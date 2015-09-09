@@ -100,8 +100,24 @@ d3.chart('SolarTerminatorChart', {
           this.selectAll('.dot').duration(1000).attr('r', 6);
         },
 
+        exit: function () {
+          // Exit not going into merge // TODO add event in d3.chart
+          var zoom = this.chart().zoom,
+            zoomTranslate = zoom.translate(),
+            zoomScale = zoom.scale();
+
+          this.selectAll('.dot').attr('cx', function (point, cIndex) {
+            var margin = map.width*cIndex*zoomScale*chart.marginDirection();
+            return projection([point.lon, point.lat])[0]+margin;
+          }).attr('cy', function (point) {
+            return projection([point.lon, point.lat])[1];
+          });
+        },
+
         'exit:transition': function () {
-          this.selectAll('.dot').duration(1000).attr('r', 0).remove();
+          this.selectAll('.dot').duration(function (d) {
+            return 1000///d3.select(this).attr('r');
+          }).attr('r', 0).remove();
         }
       }
     });

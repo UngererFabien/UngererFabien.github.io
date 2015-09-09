@@ -26,11 +26,24 @@
         return cities[Math.round(Math.random()*239)];
       }
 
+      var t = 0;
+
       function rData () {
         var points = [];
 
         for(var i = 0; i < 100; i++) {
-          var point = getRandomCity(); point.id = i;
+          var point = getRandomCity(); point.id = t++;
+          points.push(point);
+        }
+
+        return points;
+      }
+
+      function updateRandomData (points) {
+        points.splice(0, 10);
+
+        for(var i = 0; i < 10; i++) {
+          var point = getRandomCity(); point.id = t++;
           points.push(point);
         }
 
@@ -44,11 +57,10 @@
       // console.log(randomData);
       chart.draw(randomData);
 
-
-      // setInterval(function () {
-      //   updateRandomData(randomData);
-      //   chart.draw(randomData)
-      // }, 1000)
+      setInterval(function () {
+        updateRandomData(randomData);
+        chart.draw(randomData)
+      }, 1000)
 
     </script>
   </body>
