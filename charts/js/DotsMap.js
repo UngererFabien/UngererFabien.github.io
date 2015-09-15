@@ -60,6 +60,19 @@ d3.chart('SolarTerminatorChart', {
     this.renderWorld(map);
     this.renderSolarTerminator(map, initTranslate, projection);
 
+    function moveDots() {
+      var zoom = _this.zoom,
+          zoomTranslate = zoom.translate(),
+          zoomScale = zoom.scale();
+
+      this.selectAll('.dot').attr('cx', function (point, cIndex) {
+        var margin = map.width*cIndex*zoomScale*chart.marginDirection();
+        return projection([point.lon, point.lat])[0]+margin;
+      }).attr('cy', function (point) {
+        return projection([point.lon, point.lat])[1];
+      });
+    }
+
     var dotsLayer = this.layer('dots', this.svg.append('g'), {
 
       dataBind: function (data) {
@@ -84,16 +97,7 @@ d3.chart('SolarTerminatorChart', {
         },
 
         merge: function () {
-          var zoom = this.chart().zoom,
-            zoomTranslate = zoom.translate(),
-            zoomScale = zoom.scale();
-
-          this.selectAll('.dot').attr('cx', function (point, cIndex) {
-            var margin = map.width*cIndex*zoomScale*chart.marginDirection();
-            return projection([point.lon, point.lat])[0]+margin;
-          }).attr('cy', function (point) {
-            return projection([point.lon, point.lat])[1];
-          });
+          this.call(moveDots);
         },
 
         'merge:transition': function () {
@@ -101,17 +105,7 @@ d3.chart('SolarTerminatorChart', {
         },
 
         exit: function () {
-          // Exit not going into merge // TODO add event in d3.chart
-          var zoom = this.chart().zoom,
-            zoomTranslate = zoom.translate(),
-            zoomScale = zoom.scale();
-
-          this.selectAll('.dot').attr('cx', function (point, cIndex) {
-            var margin = map.width*cIndex*zoomScale*chart.marginDirection();
-            return projection([point.lon, point.lat])[0]+margin;
-          }).attr('cy', function (point) {
-            return projection([point.lon, point.lat])[1];
-          });
+          this.call(moveDots);
         },
 
         'exit:transition': function () {
@@ -121,9 +115,10 @@ d3.chart('SolarTerminatorChart', {
         }
       }
     });
-
+    
     this.zoom.on('zoom.dots', function () {
-      dotsLayer.draw(_this.dataVal);
+      // dotsLayer.draw(_this.dataVal);
+      dotsLayer.selectAll('.dotg').call(moveDots);
     });
 
   },
