@@ -28,7 +28,7 @@
 
         for (var i = 0; i < 5; i++) {
           var line = {id: 'line_'+i, points: []};
-          var random = d3.random.normal(2+i*5);
+          var random = d3.random.normal(2+i*50, 30);
 
           for (var h = 0; h <= 100; h++) {
             line.points.push({

@@ -60,7 +60,7 @@ d3.chart('WorldMapChart', {
           translate = translatePos;
 
           // console.log(translate[0]*scale);
-
+          
           context.beginPath();
           path(land);
           context.fillStyle = '#cecfd3';
