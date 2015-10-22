@@ -3,7 +3,7 @@ d3.chart('BarAveragesChart', {
   initialize: function () {
     var _this = this;
 
-    var margin = {bottom: 20, top: 30, left: 20, right: 50};
+    var margin = {bottom: 20, top: 30, left: 20, right: 15};
 
     var svg = this.base.node();
     this.width = +svg.getAttribute('width');
