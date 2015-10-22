@@ -1090,17 +1090,4 @@
     "cs": 1.156,
     "min_played": 171,
     "games_played": 6
-}, {
-    "name": "Koro1",
-    "team": "EDG",
-    "position": "Top",
-    "kda": 0,
-    "kills": 0,
-    "deaths": 0,
-    "assists": 0,
-    "kill_participation": "0.0%",
-    "cs_per_min": 0,
-    "cs": 0,
-    "min_played": 0,
-    "games_played": 0
 }]
