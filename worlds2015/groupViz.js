@@ -1,9 +1,11 @@
 (function () {
-	var chart = d3.select('.barAveragesChart')
-		.append('svg')
-		.attr('width', 900)
-		.attr('height', 500)
-		.chart('BarAveragesChart');
+
+	var barAvg = [
+		{nestAttr: 'team', attr: 'kda'},
+		{nestAttr: 'team', attr: 'cs_per_min'},
+		{nestAttr: 'position', attr: 'kda'},
+		{nestAttr: 'position', attr: 'cs_per_min'},
+	]
 
 	var allPlayers;
 
@@ -54,8 +56,15 @@
 	d3.json('./playersGroupStage.json', function (err, players) {
 		allPlayers = players;
 
-		//chart.draw(getPlayersDataByAttrAndCat(allPlayers, 'kda', 'team'))
+		for (var i = barAvg.length - 1; i >= 0; i--) {
+			console.log('.barAvg-'+barAvg[i].nestAttr+'-'+barAvg[i].attr);
+			barAvg[i].chart = d3.select('.barAvg-'+barAvg[i].nestAttr+'-'+barAvg[i].attr)
+				.append('svg')
+				.attr('width', 900)
+				.attr('height', 500)
+				.chart('BarAveragesChart');
 
-		chart.draw(getNestDataByAttrAndCat(allPlayers, 'team', 'kda', 'all'));
+			barAvg[i].chart.draw(getNestDataByAttrAndCat(allPlayers, barAvg[i].nestAttr, barAvg[i].attr, 'all'))
+		};
 	});
 })();

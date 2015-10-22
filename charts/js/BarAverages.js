@@ -225,8 +225,6 @@ d3.chart('BarAveragesChart', {
         // .attr('transform', 'rotate(30)')
         // .style('text-anchor', 'start');
 
-    console.log(data, averages);
-
     return {
       points: data,
       averages: averages
