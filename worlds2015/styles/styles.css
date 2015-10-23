@@ -3,10 +3,12 @@ body {
 	background-color: #101010;
 	font-size: 14px;
 	color: #fff;
+	/*color: #ccc;*/
 }
 
 text {
 	fill: #fff;
+	/*fill: #ccc;;*/
 }
 
 h1 {
@@ -17,6 +19,7 @@ h1 {
 	margin: auto;
 	width: 900px;
 	margin-top: 50px;
+	/*border-bottom: 1px solid #ccc;*/
 }
 
 .chart h2 {
