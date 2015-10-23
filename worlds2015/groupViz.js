@@ -57,7 +57,6 @@
 		allPlayers = players;
 
 		for (var i = barAvg.length - 1; i >= 0; i--) {
-			console.log('.barAvg-'+barAvg[i].nestAttr+'-'+barAvg[i].attr);
 			barAvg[i].chart = d3.select('.barAvg-'+barAvg[i].nestAttr+'-'+barAvg[i].attr)
 				.append('svg')
 				.attr('width', 900)
