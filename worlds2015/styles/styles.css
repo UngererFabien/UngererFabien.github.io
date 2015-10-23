@@ -9,12 +9,11 @@ text {
 	fill: #fff;
 }
 
-h2 {
-	text-align: center;
+.chart {
+	margin: auto;
+	width: 900px;
 }
 
-.barAveragesChart {
-	margin: auto;
-	/*margin-top: 100px;*/
-	width: 900px;
+.chart h2 {
+	text-align: center;
 }
