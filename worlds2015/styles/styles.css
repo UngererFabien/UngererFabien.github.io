@@ -9,9 +9,14 @@ text {
 	fill: #fff;
 }
 
+h1 {
+	text-align: center;
+}
+
 .chart {
 	margin: auto;
 	width: 900px;
+	margin-top: 50px;
 }
 
 .chart h2 {
