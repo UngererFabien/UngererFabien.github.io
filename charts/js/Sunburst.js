@@ -41,16 +41,28 @@ d3.chart('SunburstChart', {
       },
 
       insert: function () {
-        return this.append('path');
+        var g = this.append('g');
+
+        g.append('path');
+        g.append('text');
+
+        return g
       },
 
       events: {
         enter: function () {
           var chart = this.chart();
 
-          this.attr('d', enterArc).style('fill', function (point) {
+          this.select('path').attr('d', enterArc).style('fill', function (point) {
               return color((point.children ? point : point.parent).id);
-            });
+          });
+
+          this.select('text').attr('x', function (d) {
+            // console.log(d.x, d.y);
+            return (d.x+d.dx)/2;
+          }).attr('y', function (d) {
+            return (d.y+d.dy)/2;
+          });
         },
 
         'first:merge:transition': function () {
@@ -58,7 +70,7 @@ d3.chart('SunburstChart', {
 
           // var totalDelay = 0;
 
-          this.duration(function (d) {
+          this.select('path').duration(function (d) {
             //if(!d.depth) chart.totalVal = d.value;
             return 700 //(d.value/chart.totalVal)*10000;
           }).delay(function (d, i) {
@@ -67,11 +79,37 @@ d3.chart('SunburstChart', {
 
             // return delay;
             return d.depth*400
-          }).attr('d', arc);
+          }).attr('d', function (d) {
+            if(d.depth > 0) {
+              return arc(d);
+            } else this.remove();
+          });
+
+          this.select('text').duration(1000)
+            .tween('text', function (point) {
+              var currVal = +this.textContent;
+              var inter = d3.interpolate(currVal, point.value);
+              return function (t) {
+                this.textContent = Math.round(inter(t)*100)/100;
+              }
+            });
         },
 
         'merge:transition': function () {
-          this.duration(700).attr('d', arc);
+          this.select('path').duration(700).attr('d', function (d) {
+            if(d.depth > 0) {
+              return arc(d);
+            } else this.remove();
+          });
+
+          this.select('text').duration(1000)
+            .tween('text', function (point) {
+              var currVal = +this.textContent;
+              var inter = d3.interpolate(currVal, point.value);
+              return function (t) {
+                this.textContent = Math.round(inter(t)*100)/100;
+              }
+            });
         }
       }
     });

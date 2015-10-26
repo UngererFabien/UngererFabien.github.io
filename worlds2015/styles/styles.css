@@ -11,7 +11,17 @@ text {
 	/*fill: #ccc;;*/
 }
 
+.sunburst path {
+	stroke: #fff;
+	stroke-width: 0.7px;
+}
+
 h1 {
+	text-align: center;
+}
+
+h2 {
+	margin-top: 50px;
 	text-align: center;
 }
 
@@ -22,6 +32,6 @@ h1 {
 	/*border-bottom: 1px solid #ccc;*/
 }
 
-.chart h2 {
+.chart h3 {
 	text-align: center;
 }

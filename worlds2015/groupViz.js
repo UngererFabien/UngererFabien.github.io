@@ -7,14 +7,58 @@
 		{nestAttr: 'position', attr: 'cs_per_min'},
 	]
 
+	var sunburst = [
+		// {cat: 'team', attr: 'kills'}
+	]
+
+	var bubbles = [
+		{cat: 'team', attr: 'kills'}
+	]
+
 	var allPlayers;
+
+	function getNestedPlayersByCat (players, cat) {
+		return d3.nest().key(function (d) {
+			return d[cat];
+		}).entries(players);
+	}
+
+	function getTreeForAttrByCatAndPlayers (players, attr, cat) {
+		var data = {
+			id: cat,
+			children: []
+		}
+
+		var nestedPlayers = getNestedPlayersByCat(players, cat);
+
+		for (var i = nestedPlayers.length - 1; i >= 0; i--) {
+			var nest = nestedPlayers[i];
+
+			var subCat = {
+				id: nest.key,
+				children: []
+			}
+
+			for (var j = nest.values.length - 1; j >= 0; j--) {
+				var player = nest.values[j]
+
+				subCat.children.push({
+					id: player.name,
+					value: player[attr]
+				})
+			};
+
+			data.children.push(subCat);
+
+		};
+
+		return data;
+	}
 
 	function getNestDataByAttrAndCat (players, nestAttr, attr, cat) {
 		var data = [];
 
-		nestedPlayers = d3.nest().key(function (d) {
-			return d[nestAttr];
-		}).entries(players);
+		var nestedPlayers = getNestedPlayersByCat(players, nestAttr);
 
 		for (var i = nestedPlayers.length - 1; i >= 0; i--) {
 			var nest = nestedPlayers[i];
@@ -65,5 +109,27 @@
 
 			barAvg[i].chart.draw(getNestDataByAttrAndCat(allPlayers, barAvg[i].nestAttr, barAvg[i].attr, 'all'))
 		};
+
+		for (var i = sunburst.length - 1; i >= 0; i--) {
+			sunburst[i].chart = d3.select('.sunburst-'+sunburst[i].cat+'-'+sunburst[i].attr)
+				.append('svg')
+				.attr('width', 900)
+				.attr('height', 500)
+				.chart('SunburstChart');
+
+			sunburst[i].chart.draw(getTreeForAttrByCatAndPlayers(players, sunburst[i].attr, sunburst[i].cat))
+		};
+
+		for (var i = bubbles.length - 1; i >= 0; i--) {
+			bubbles[i].chart = d3.select('.bubbles'+bubbles[i].cat+'-'+bubbles[i].attr)
+				.append('svg')
+				.attr('width', 900)
+				.attr('height', 500)
+				.chart('Chart');
+
+			bubbles[i].chart.draw(getTreeForAttrByCatAndPlayers(players, bubbles[i].attr, bubbles[i].cat))
+		};
+
+		// getTreeForAttrByCatAndPlayers(players, 'kills', 'team');
 	});
 })();
