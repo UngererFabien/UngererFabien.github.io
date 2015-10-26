@@ -12,7 +12,14 @@
 	]
 
 	var bubbles = [
-		{cat: 'team', attr: 'kills'}
+		{cat: 'team', attr: 'kills'},
+		{cat: 'position', attr: 'kills'},
+		{cat: 'team', attr: 'deaths'},
+		{cat: 'position', attr: 'deaths'},
+		{cat: 'team', attr: 'assists'},
+		{cat: 'position', attr: 'assists'},
+		{cat: 'team', attr: 'cs'},
+		{cat: 'position', attr: 'cs'}
 	]
 
 	var allPlayers;
@@ -26,7 +33,7 @@
 	function getTreeForAttrByCatAndPlayers (players, attr, cat) {
 		var data = {
 			id: cat,
-			children: []
+			_children: []
 		}
 
 		var nestedPlayers = getNestedPlayersByCat(players, cat);
@@ -36,19 +43,19 @@
 
 			var subCat = {
 				id: nest.key,
-				children: []
+				_children: []
 			}
 
 			for (var j = nest.values.length - 1; j >= 0; j--) {
 				var player = nest.values[j]
 
-				subCat.children.push({
+				subCat._children.push({
 					id: player.name,
 					value: player[attr]
 				})
 			};
 
-			data.children.push(subCat);
+			data._children.push(subCat);
 
 		};
 
@@ -121,11 +128,11 @@
 		};
 
 		for (var i = bubbles.length - 1; i >= 0; i--) {
-			bubbles[i].chart = d3.select('.bubbles'+bubbles[i].cat+'-'+bubbles[i].attr)
+			bubbles[i].chart = d3.select('.bubbles-'+bubbles[i].cat+'-'+bubbles[i].attr)
 				.append('svg')
-				.attr('width', 900)
-				.attr('height', 500)
-				.chart('Chart');
+				.attr('width', 450)
+				.attr('height', 450)
+				.chart('BubblesChart');
 
 			bubbles[i].chart.draw(getTreeForAttrByCatAndPlayers(players, bubbles[i].attr, bubbles[i].cat))
 		};

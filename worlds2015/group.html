@@ -16,6 +16,23 @@
 
 	</script>
 
+	<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
 	<script type="text/javascript" src="../charts/js/libs/jquery-2.1.3.js"></script>
 	<script type="text/javascript" src="../charts/js/libs/underscore.js"></script>
 	<script type="text/javascript" src="../charts/js/libs/d3/d3.js"></script>
@@ -28,29 +45,87 @@
 <body>
 	<h1>LoL worlds 2015 group stage</h1>
 
-	<h2 id="totals-team-positions">Totals by teams and positions</h2>
+	<section>
 
-	<div class="chart bubbles-team-kills">
-		<h3>Kills by teams and players</h3>
-	</div>
+		<h2 id="totals-team-positions">Totals by teams and positions</h2>
 
-	<h2 id="avg-teams-positions">Averages by teams and positions</h2>
+		<div class="double">
+			<div class="chart">
+				<h3>Kills by teams and players</h3>
+				<div class="bubbles bubbles-team-kills"></div>
+			</div>
 
-	<div class="chart barAvg-team-kda">
-		<h3>Average player KDA by team</h3>
-	</div>
+			<div class="chart">
+				<h3>Kills by positions and players</h3>
+				<div class="bubbles bubbles-position-kills"></div>
+			</div>
+		</div>
 
-	<div class="chart barAvg-team-cs_per_min">
-		<h3>Average player CS per min by team</h3>
-	</div>
+		<div class="double">
+			<div class="chart">
+				<h3>Deaths by teams and players</h3>
+				<div class="bubbles bubbles-team-deaths"></div>
+			</div>
 
-	<div class="chart barAvg-position-kda">
-		<h3>Average player KDA by position</h3>
-	</div>
+			<div class="chart">
+				<h3>Deaths by positions and players</h3>
+				<div class="bubbles bubbles-position-deaths"></div>
+			</div>
+		</div>
 
-	<div class="chart barAvg-position-cs_per_min">
-		<h3>Average player CS per min by position</h3>
-	</div>
+		<div class="double">
+			<div class="chart">
+				<h3>Assists by teams and players</h3>
+				<div class="bubbles bubbles-team-assists"></div>
+			</div>
+
+			<div class="chart">
+				<h3>Assists by positions and players</h3>
+				<div class="bubbles bubbles-position-assists"></div>
+			</div>
+		</div>
+
+		<div class="double">
+			<div class="chart">
+				<h3>CS by teams and players</h3>
+				<div class="bubbles bubbles-team-cs"></div>
+			</div>
+
+			<div class="chart">
+				<h3>CS by positions and players</h3>
+				<div class="bubbles bubbles-position-cs"></div>
+			</div>
+		</div>
+
+	</section>
+
+	<div style="clear:both"></div>
+
+	<section>
+
+		<h2 id="avg-teams-positions">Averages by teams and positions</h2>
+
+		<div class="chart barAvg-team-kda">
+			<h3>Average player KDA by team</h3>
+		</div>
+
+		<div class="chart barAvg-team-cs_per_min">
+			<h3>Average player CS per min by team</h3>
+		</div>
+
+		<div class="chart barAvg-position-kda">
+			<h3>Average player KDA by position</h3>
+		</div>
+
+		<div class="chart barAvg-position-cs_per_min">
+			<h3>Average player CS per min by position</h3>
+		</div>
+
+	</section>
+
+	<footer>
+		<a href="https://twitter.com/GuySake" class="twitter-follow-button" style="margin:auto" data-show-count="false">Follow @GuySake</a>
+	</footer>
 
 	<script type="text/javascript" src="./groupViz.js"></script>
 </body>

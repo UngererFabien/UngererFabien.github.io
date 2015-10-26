@@ -71,10 +71,10 @@ d3.chart('BubblesChart', {
             }
           }).on('mouseenter', function () {
             var zoomId = d3.select(this).attr('data-zoomId');
-            d3.select('#'+zoomId).attr('class', 'bubble zoomHover')
+            chart.base.select('#'+zoomId).attr('class', 'bubble zoomHover')
           }).on('mouseleave', function () {
             var zoomId = d3.select(this).attr('data-zoomId');
-            d3.select('#'+zoomId).attr('class', 'bubble')
+            chart.base.select('#'+zoomId).attr('class', 'bubble')
           });
       },
 
@@ -123,6 +123,50 @@ d3.chart('BubblesChart', {
         }
       }
 
+    });
+
+    this.layer('labels', this.base.append('g'), {
+      dataBind: function(data) {
+        return this.datum(data).selectAll('text')
+          .data(pack.nodes, function (node) {
+            return node.id;
+          });
+      },
+
+      insert: function () {
+        return this.append('text');
+      },
+
+      events: {
+        enter: function () {
+          this.text(function (d) {
+            return d.id + ' - ' + d.value;
+          }).attr('x', function (d) {
+            return d.x;
+          }).attr('y', function (d) {
+            return d.y;
+          });
+        },
+
+        exit: function () {
+          this.remove();
+        },
+
+        merge: function () {
+          this.style('visibility', function (d) {
+            return d.depth == 1 ? 'visible' : 'hidden';
+          });
+        },
+
+        'merge:transition': function () {
+          this.duration(500)
+            .attr('x', function (d) {
+              return d.x;
+            }).attr('y', function (d) {
+              return d.y;
+            })
+        }
+      }
     });
   },
 
