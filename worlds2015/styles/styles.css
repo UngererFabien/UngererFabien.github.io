@@ -49,6 +49,11 @@ h3 {
 	/*border-bottom: 1px solid #ccc;*/
 }
 
+.chart.bigNumber {
+	font-size: 100px;
+	text-align: center;
+}
+
 .sunburst path {
 	stroke: #fff;
 	stroke-width: 0.7px;
@@ -67,7 +72,7 @@ h3 {
 
 .bubbles text {
 	text-anchor: middle;
-	fill-opacity: 1;
+	/*fill-opacity: 1;*/
 }
 
 .bubbles .zoomHover {

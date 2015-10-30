@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LOL Worlds 2015 SKT vs KOO</title>
+
+	<meta name="description" content="Data viz of league of legends worlds 2015 SKY vs KOO">
+	<meta name="author" content="GuySake">
+	<meta charset="UTF-8">
+
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@GuySake" />
+	<meta name="twitter:title" content="LOL Worlds 2015 SKT vs KOO" />
+	<meta name="twitter:description" content="Data viz of league of legends worlds 2015 SKY vs KOO" />
+	<!-- <meta name="twitter:image" content="https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg" /> -->
+
+  	<link rel="stylesheet" href="./styles/styles.css">
+
+  	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-28298101-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+	<script type="text/javascript" src="../charts/js/libs/jquery-2.1.3.js"></script>
+	<script type="text/javascript" src="../charts/js/libs/underscore.js"></script>
+	<script type="text/javascript" src="../charts/js/libs/d3/d3.js"></script>
+	<script type="text/javascript" src="../charts/js/libs/d3/d3.chart.js"></script>
+
+	<script type="text/javascript" src="../charts/js/BarAverages.js"></script>
+	<script type="text/javascript" src="../charts/js/Sunburst.js"></script>
+	<script type="text/javascript" src="../charts/js/Bubbles.js"></script>
+</head>
+<body>
+	<h1><img src="./images/SKT.png"> VS <img src="./images/KOO.png"></h1>
+
+	<section>
+		<h2>Kills, deaths and assists</h2>
+		<div class="double">
+			<div class="chart">
+				<div class="bubbles bubbles-KDA-SKT"></div>
+			</div>
+
+			<div class="chart">
+				<div class="bubbles bubbles-KDA-KOO"></div>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+
+		<h2>Gold Differential at 15 min</h2>
+		<div class="double">
+			<div class="chart bigNumber">
+				+1,986
+			</div>
+			
+			<div class="chart bigNumber">
+				+1,015
+			</div>
+		</div>
+		<div style="clear:both"></div>
+
+		<h2>First Blood</h2>
+		<div class="double">
+			<div class="chart bigNumber">
+				83%
+			</div>
+			
+			<div class="chart bigNumber">
+				46%
+			</div>
+		</div>
+		<div style="clear:both"></div>
+	</section>
+
+	<section>
+		<div class="chart barAvg-players-kda">
+			<h3>KDA</h3>
+		</div>
+
+		<div class="chart barAvg-players-cs_per_min">
+			<h3>CS per min</h3>
+		</div>
+
+		<div class="chart barAvg-players-egpm">
+			<h3>Gold per min</h3>
+		</div>
+	</section>
+
+	<!-- <div style="clear:both"></div> -->
+
+	<footer>
+		<a href="https://twitter.com/GuySake" class="twitter-follow-button" style="margin:auto" data-show-count="false">@GuySake</a>
+	</footer>
+
+	<script type="text/javascript" src="./preFinalViz.js"></script>
+</body>
+</html>

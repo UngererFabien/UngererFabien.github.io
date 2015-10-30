@@ -104,7 +104,7 @@
 		return data;
 	}
 
-	d3.json('./playersGroupStage.json', function (err, players) {
+	d3.json('./json/playersGroupStage.json', function (err, players) {
 		allPlayers = players;
 
 		for (var i = barAvg.length - 1; i >= 0; i--) {

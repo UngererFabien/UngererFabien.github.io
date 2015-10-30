@@ -140,7 +140,7 @@ d3.chart('BubblesChart', {
       events: {
         enter: function () {
           this.text(function (d) {
-            return d.id + ' - ' + d.value;
+            return (d.label || d.id) + ' - ' + d.value;
           }).attr('x', function (d) {
             return d.x;
           }).attr('y', function (d) {
