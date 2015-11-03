@@ -57,41 +57,122 @@
         return categories;
       };
 
-      function sumChildren (children, id) {
-        var _true = 0, _false = 0;
+      // JULIEN function 1
+      function getChildrenSum (children) {
+        var sum = 0;
 
         for (var i = children.length - 1; i >= 0; i--) {
-          if(children[i]._children) {
-            if(children[i]._children[0]._children) {
-              children[i].sumedChildren = sumChildren(children[i]._children, children[i].id);
-              _true += children[i].sumedChildren[0].value;
-              _false += children[i].sumedChildren[1].value;
-            } else {
-              for (var j = children[i]._children.length - 1; j >= 0; j--) {
-                if(children[i]._children[j].converted) {
-                  _true += children[i]._children[j].value;
-                } else _false += children[i]._children[j].value;
-              };
-            }
-          } else {
-            if(children[i].converted) {
-              _true += children[i].value;
-            } else _false += children[i].value;
+          var child =  children[i];
+
+          if(child._children && child._children.length) {
+            for (var j = child._children.length - 1; j >= 0; j--) {
+              var _child = child._children[j]
+
+              if(_child._children) {
+                sum += getChildrenSum(_child._children);
+              } else sum += _child.value || 0;
+            };
+          } else sum += child.value || 0;
+        };
+
+        return sum;
+      }
+
+      // JULIEN function 2
+      function getSumedChildren (children) {
+        var sumedChildren = [];
+
+        for (var i = children.length - 1; i >= 0; i--) {
+          var child = children[i];
+
+          if(child._children && child._children.length) {
+            for (var j = child._children.length - 1; j >= 0; j--) {
+              var _child = child._children[j];
+
+              var sumedChild = {id: _child.id+'sumed'}
+
+              if(_child._children) {
+                sumedChild.value = getChildrenSum(_child._children);
+              } else sumedChild.value = _child.value || 0;
+
+              sumedChildren.push(sumedChild);
+            };
           }
         };
 
-        return [
-          {id: id+'_sumedTrue', converted: true, value: _true},
-          {id: id+'_sumedFalse', converted: false, value: _false}
-        ];
+        return sumedChildren.length ? sumedChildren : undefined;        
       }
+
+      // JULIEN function 3
+      function getAllSumedChildren (data) {
+        var children = data._children;
+
+        if (children) {
+          data.sumedChildren = getSumedChildren(children);
+
+          for (var i = children.length - 1; i >= 0; i--) {
+            getAllSumedChildren(children[i])
+          };
+        }
+      }
+
+      // function sumChildren (children, id) {
+      //   var sum = 0;
+
+      //   for (var i = children.length - 1; i >= 0; i--) {
+      //     if(children[i]._children) {
+      //       if(children[i]._children[0]._children) {
+      //         children[i].sumedChildren = sumChildren(children[i]._children, children[i].id);
+      //         sum += children[i].sumedChildren[0].value;
+      //       } else {
+      //         for (var j = children[i]._children.length - 1; j >= 0; j--) {
+      //           sum += children[i]._children[j].value;
+      //         };
+      //       }
+      //     } else {
+      //       sum += children[i].value;
+      //     }
+      //   };
+
+      //   return [{id: id+'_sumed', value: sum}];
+      // }
+
+      // function sumChildren (children, id) {
+      //   var _true = 0, _false = 0;
+
+      //   for (var i = children.length - 1; i >= 0; i--) {
+      //     if(children[i]._children) {
+      //       if(children[i]._children[0]._children) {
+      //         children[i].sumedChildren = sumChildren(children[i]._children, children[i].id);
+      //         _true += children[i].sumedChildren[0].value;
+      //         _false += children[i].sumedChildren[1].value;
+      //       } else {
+      //         for (var j = children[i]._children.length - 1; j >= 0; j--) {
+      //           if(children[i]._children[j].converted) {
+      //             _true += children[i]._children[j].value;
+      //           } else _false += children[i]._children[j].value;
+      //         };
+      //       }
+      //     } else {
+      //       if(children[i].converted) {
+      //         _true += children[i].value;
+      //       } else _false += children[i].value;
+      //     }
+      //   };
+
+      //   return [
+      //     {id: id+'_sumedTrue', converted: true, value: _true},
+      //     {id: id+'_sumedFalse', converted: false, value: _false}
+      //   ];
+      // }
 
       function getCategory () {
         //
       }
 
       var randomData = rData();
-      randomData.sumedChildren = sumChildren(randomData._children, randomData.id);
+      getAllSumedChildren(randomData);
+      //randomData.sumedChildren = sumChildren(randomData._children, randomData.id);
 
       chart.zoom(0).draw(randomData);
 
