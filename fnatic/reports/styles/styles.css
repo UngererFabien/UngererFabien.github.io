@@ -1,0 +1,102 @@
+body {
+	font-family: Titillium, sans-serif;
+	font-style: normal;
+	font-weight: 500;
+	background-color: #000000;
+	font-size: 14px;
+	color: #fff;
+	/*color: #ccc;*/
+}
+
+text {
+	fill: #fff;
+	/*fill: #ccc;;*/
+	fill-opacity: 1;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	/*margin-top: 50px;*/
+	text-align: center;
+}
+
+h3 {
+	/*text-align: center;*/
+}
+
+a, li {
+	color: inherit;
+}
+
+a {
+	text-decoration: underline;
+}
+
+li {
+	/*list-style-type: none;*/
+	padding: 2px;
+}
+
+.orange {
+	color: #FFC203
+}
+
+.content {
+	margin: auto;
+	margin-bottom: 1px;
+	width: 900px;
+	background-color: #2E2E2E;
+	padding: 10px;
+}
+
+.double {
+	width: 900px;
+	margin: auto;
+	/*margin-top: 50px;*/
+}
+
+.double .chart {
+	float: left;
+	width: 450px;
+}
+
+.chart {
+	margin: auto;
+	width: 900px;
+	margin-top: 50px;
+	/*border-bottom: 1px solid #ccc;*/
+}
+
+.chart.bigNumber {
+	font-size: 100px;
+	text-align: center;
+}
+
+.sunburst path {
+	stroke: #fff;
+	stroke-width: 0.7px;
+}
+
+.bubbles {
+	margin: auto;
+	width: 450px;
+}
+
+.bubbles .bubble {
+	fill: steelblue;
+	fill-opacity: 0.5;
+	cursor: pointer;
+}
+
+.bubbles text {
+	text-anchor: middle;
+	/*fill-opacity: 1;*/
+}
+
+.bubbles .zoomHover {
+	stroke: steelblue;
+  	stroke-opacity: 1;
+}
