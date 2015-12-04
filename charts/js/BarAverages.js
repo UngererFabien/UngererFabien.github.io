@@ -90,7 +90,7 @@ d3.chart('BarAveragesChart', {
 
         merge: function () {
           this.select('rect').style('fill', function (d) {
-            return color(d.cat);
+            return d.color || color(d.cat);
           })
         },
 
@@ -161,7 +161,7 @@ d3.chart('BarAveragesChart', {
 
         merge: function () {
           this.select('line').style('stroke', function (avg) {
-            return color(avg.key);
+            return avg.color || color(avg.key);
           });
         },
 
@@ -210,7 +210,8 @@ d3.chart('BarAveragesChart', {
       var cat = cats[i];
       averages.push({
         key: cat.key,
-        val: d3.sum(cat.values, function (d) {return d.value})/cat.values.length
+        val: d3.sum(cat.values, function (d) {return d.value})/cat.values.length,
+        color: cat.key == 'FNC' ? '#FFC203' : undefined // win time <3 Fnatic
       });
     };
 
