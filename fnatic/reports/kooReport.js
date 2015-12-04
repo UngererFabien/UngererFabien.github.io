@@ -3,8 +3,11 @@
 	var barAvg = [
 		{attr: 'kda', cat: 'team'},
 		{attr: 'cs_per_min', cat: 'team'},
-		{attr: 'kill_participation', cat:'team'}
-		// {attr: 'egpm', cat: 'team'}
+		{attr: 'kill_participation_at_12', cat:'team'},
+		{attr: 'kill_participation', cat:'team'},
+		{attr: 'egpm', cat: 'team'},
+		{attr: 'wpm', cat: 'team'},
+		{attr: 'wcpm', cat: 'team'}
 	]
 
 	var allPlayers;
@@ -122,16 +125,10 @@
 		return data;
 	}
 
-	d3.json('./json/players.json', function (err, players) {
-		allPlayers = players;
+	var teams = ['FNC', 'KOO'];
+	var vsPlayers;
 
-		var teams = ['FNC', 'KOO'];
-
-		// console.log('SKT kills', getSumForTeamByAttr(allPlayers, 'SKT', 'kills'));
-		// console.log('KOO kills', getSumForTeamByAttr(allPlayers, 'KOO', 'kills'));
-
-		var vsPlayers = getPlayersFromTeams(allPlayers, teams);
-
+	function renderAllAvgBar (players) {
 		for (var i = barAvg.length - 1; i >= 0; i--) {
 			barAvg[i].chart = d3.select('.barAvg-players-'+barAvg[i].attr)
 				.append('svg')
@@ -139,8 +136,19 @@
 				.attr('height', 500)
 				.chart('BarAveragesChart');
 
-			barAvg[i].chart.draw(getDataByAttrAndCat(vsPlayers, barAvg[i].attr, barAvg[i].cat));
+			barAvg[i].chart.draw(getDataByAttrAndCat(players, barAvg[i].attr, barAvg[i].cat));
 		};
+	}
+
+	d3.json('./json/players.json', function (err, players) {
+		allPlayers = players;
+
+		// console.log('SKT kills', getSumForTeamByAttr(allPlayers, 'SKT', 'kills'));
+		// console.log('KOO kills', getSumForTeamByAttr(allPlayers, 'KOO', 'kills'));
+
+		vsPlayers = getPlayersFromTeams(allPlayers, teams);
+
+		renderAllAvgBar(vsPlayers);
 
 		for (var i = teams.length - 1; i >= 0; i--) {
 			var team = teams[i];
@@ -154,6 +162,37 @@
 			chart.draw(getCatsbubbles(getPlayersFromTeams(vsPlayers, [team]), ['kills', 'deaths', 'assists']));
 		};
 
-	})
+	});
+
+	function changeAllFilters (selector, val) {
+		$(selector).prop('checked', val);
+	};
+
+	function redrawTeamsAvg () {
+		teams = [];
+
+		if($('.fnc-avg-filter').is(':checked')) teams.push('FNC');
+		if($('.koo-avg-filter').is(':checked')) teams.push('KOO');
+
+		vsPlayers = getPlayersFromTeams(allPlayers, teams);
+
+		for (var i = barAvg.length - 1; i >= 0; i--) {
+			barAvg[i].chart.draw(getDataByAttrAndCat(vsPlayers, barAvg[i].attr, barAvg[i].cat));
+		};
+	}
+
+	$('.fnc-avg-filter').change(function () {
+		changeAllFilters('.fnc-avg-filter', $(this).is(':checked'));
+	});
+
+	$('.koo-avg-filter').change(function () {
+		changeAllFilters('.koo-avg-filter', $(this).is(':checked'));
+	});
+
+	$('.avg-filter').on('click', function () {
+		setTimeout(function () {
+			redrawTeamsAvg();
+		}, 0);
+	});
 	
 })();

@@ -49,7 +49,7 @@
 					<li><a href="#pos-supp">Support</a></li>
 				</ul>
 			</li>
-			<li><a href="#losses">Lose conditions</a></li>
+			<li><a href="#losses">Loss conditions</a></li>
 			<li><a href="#stats">Stats</a></li>
 		</ul>
 	</div>
@@ -180,8 +180,21 @@
 			I did not save all stats after quarter finals. Some of them are about overall worlds. I will mark them with *. I use them as examples for the exercise and illustrate KOO comportements when it still reflect their 10 first games.
 		</p>
 
-		<h3 class="orange">Kills, death and assists</h3>
-		<div class="double">
+		<ul class="orange">
+			<li><a href="#stats-kda">Kills, deaths and assists</a></li>
+			<li><a href="#stats-avg-kda">KDA</a></li>
+			<li><a href="#stats-avg-cs">CS per minute</a></li>
+			<li><a href="#stats-kp-12">Kill participation at 12 minutes</a></li>
+			<li><a href="#stats-kp">Kill participation</a></li>
+			<li><a href="#stats-egpm">Average earned gold per minute *</a></li>
+			<li><a href="#stats-wpm">Wards placed per minute *</a></li>
+			<li><a href="#stats-wcpm">Wards cleared per minute *</a></li>
+			<li><a href="#stats-dragon">Dragon</a></li>
+		</ul>
+
+		<!-- <h3 id="stats-kda" class="orange">Kills, deaths and assists</h3>
+ -->		<div class="double">
+			<h3 id="stats-kda" class="orange">Kills, deaths and assists</h3>
 			<div class="chart">
 				<div class="bubbles bubbles-KDA-FNC"></div>
 			</div>
@@ -193,16 +206,64 @@
 		<div style="clear:both"></div>
 
 		<div class="chart barAvg-players-kda">
-			<h3 class="orange">KDA</h3>
+			<h3 id="stats-avg-kda" class="orange">KDA</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
 		</div>
 
 		<div class="chart barAvg-players-cs_per_min">
-			<h3 class="orange">CS per min</h3>
+			<h3 id="stats-avg-cs" class="orange">CS per minute</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
+		</div>
+
+		<div class="chart barAvg-players-kill_participation_at_12">
+			<h3 id="stats-kp-12" class="orange">Kill participation in % at 12 minutes</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
 		</div>
 
 		<div class="chart barAvg-players-kill_participation">
-			<h3 class="orange">Kill participation in %</h3>
+			<h3 id="stats-kp" class="orange">Kill participation in %</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
 		</div>
+
+		<div class="chart barAvg-players-egpm">
+			<h3 id="stats-egpm" class="orange">Average earned gold per minute *</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
+		</div>
+
+		<div class="chart barAvg-players-wpm">
+			<h3 id="stats-wpm" class="orange">Wards placed per minute *</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
+		</div>
+
+		<div class="chart barAvg-players-wcpm">
+			<h3 id="stats-wcpm" class="orange">Wards cleared per minute *</h3>
+			<label><input class="fnc-avg-filter avg-filter" type="checkbox" checked="true">FNC</label>
+			<label><input class="koo-avg-filter avg-filter" type="checkbox" checked="true">KOO</label>
+		</div>
+
+		<div id="stats-dragon" class="double">
+			<div class="bigNumberContainer">
+				<h3 class="orange">First dragon</h3>
+				<div class="chart bigNumber">
+					8/10
+				</div>
+				<p>The two first dragon they lose are take after 12 minutes. In against CLG and against KT</p>
+			</div>
+			<div class="bigNumberContainer">
+				<h3 class="orange">First dragon before 12 minutes</h3>
+				<div class="chart bigNumber">
+					6/8
+				</div>
+				<p>The two first dragon after 12 minutes were against KT. In the two last game of the BO</p>
+			</div>
+		</div>
+		<div style="clear:both"></div>
 	</div>
 
 	

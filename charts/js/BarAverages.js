@@ -69,9 +69,7 @@ d3.chart('BarAveragesChart', {
             });
 
           this.select('text').attr('text-anchor', 'middle')
-            .attr('x', function x (point, i) {
-              return chart.scaleX(point.label) + chart.scaleX.rangeBand()/2;
-            }).attr('y', function (point) {
+            .attr('y', function (point) {
               return chart.height - margin.bottom - margin.top - 7; // For animation
             })
 
@@ -111,7 +109,9 @@ d3.chart('BarAveragesChart', {
             });
 
           this.select('text').duration(1000)
-            .attr('y', function (point) {
+            .attr('x', function x (point, i) {
+              return chart.scaleX(point.label) + chart.scaleX.rangeBand()/2;
+            }).attr('y', function (point) {
               return chart.scaleY(point.value) - 7;
             }).tween('text', function (point) {
               var currVal = +this.textContent;
@@ -120,6 +120,10 @@ d3.chart('BarAveragesChart', {
                 this.textContent = Math.round(inter(t)*100)/100;
               }
             })
+        },
+
+        exit: function() {
+          this.remove();
         }
       }
     });
@@ -185,6 +189,10 @@ d3.chart('BarAveragesChart', {
                 this.textContent = Math.round(inter(t)*100)/100;
               }
             })
+        },
+
+        exit: function () {
+          this.remove();
         }
       }
     });

@@ -55,7 +55,7 @@ li {
 .double {
 	width: 900px;
 	margin: auto;
-	/*margin-top: 50px;*/
+	margin-top: 50px;
 }
 
 .double .chart {
@@ -67,12 +67,32 @@ li {
 	margin: auto;
 	width: 900px;
 	margin-top: 50px;
+	height: 550px;
 	/*border-bottom: 1px solid #ccc;*/
 }
 
 .chart.bigNumber {
 	font-size: 100px;
 	text-align: center;
+	height: 100px;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+
+.bigNumberContainer {
+	height: 250px;
+	float: left;
+	width: 450px;
+}
+
+.bigNumberContainer h3 {
+	text-align: center;
+}
+
+.bigNumberContainer p {
+	text-align: center;
+	width: 400px;
+    margin: auto;
 }
 
 .sunburst path {
