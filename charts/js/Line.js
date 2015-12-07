@@ -3,17 +3,20 @@ d3.chart('LineChart', {
   initialize: function () {
     var _this = this;
 
-    var margin = {bottom: 50, left: 30, top: 5, right: 10};
+    var margin = {bottom: 50, left: 30, top: 5, right: 20};
 
     var svg = this.base.node(),
       width = +svg.getAttribute('width'),
       height = +svg.getAttribute('height');
 
-    this.x = d3.scale.linear()
-      .range([0, width-margin.left-margin.right]);
+    this.x = d3.scale.ordinal()
+      // .range([0, width-margin.left-margin.right]);
+      .rangeRoundPoints([0, width-margin.left-margin.right]);
 
     this.y = d3.scale.linear()
       .range([height-margin.bottom-margin.top-1, 0]);
+
+    var color = d3.scale.category20();
 
     this.xAxis = d3.svg.axis()
       .scale(this.x)
@@ -62,6 +65,8 @@ d3.chart('LineChart', {
 
           this.attr('d', function (line) {
             return svgLine(line.points);
+          }).style('stroke', function (line) {
+            return color(line.id);
           });
         },
 
@@ -100,13 +105,25 @@ d3.chart('LineChart', {
           return point[pointAttr];
         });
       });
-
       return [min, max];
+    }
+
+    function xDomains (lines) {
+      var domains = [];
+      for (var i = lines.length - 1; i >= 0; i--) {
+        line = lines[i];
+
+        line.points.forEach(function (patch) {
+          if(domains.indexOf(patch.x) < 0) domains.push(patch.x);
+        });
+      };
+
+      return domains;
     }
 
     // console.log(linesExtent(data, 'y'));
 
-    this.x.domain(linesExtent(data, 'x'));
+    this.x.domain(xDomains(data));
     this.y.domain(linesExtent(data, 'y'));
 
     this.svgXAxis.call(this.xAxis);

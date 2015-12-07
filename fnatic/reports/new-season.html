@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New season report</title>
+
+  	<link rel="stylesheet" href="./styles/styles.css">
+
+  	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-28298101-2', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script type="text/javascript" src="../../charts/js/libs/jquery-2.1.3.js"></script>
+	<script type="text/javascript" src="../../charts/js/libs/underscore.js"></script>
+	<script type="text/javascript" src="../../charts/js/libs/d3/d3.js"></script>
+	<script type="text/javascript" src="../../charts/js/libs/d3/d3.chart.js"></script>
+
+	<script type="text/javascript" src="../../charts/js/Line.js"></script>
+
+</head>
+<body>
+	<div class="content">
+		<h1 class="orange">New Season</h1>
+
+		<h2 class="orange">Masteries</h2>
+		<p>
+		First of all there's a lot to learn about the new masteries. Lot of champions have huge win rate difference in solo queue depending on their masteries. For example, if you take mundo. he have a 54.55% win rate in Platinium+Ranked at the moment. But most frequent masteries with Mundo have 59.86% win rate. With two masteries change, not even key one, it goes up to 66.66%.
+		</p>
+
+		<p>
+		Also, it seem that people want to try things with the new masteries. Like Sora, surely because of the masteries that buff her heal. She is in 12.45% of games with a 56.48% ban rate ! But the champion don’t have as much success in the rift as Janna and Sona. Soraka 52.28% win rate, Sona 53.19% and Janna 53.95%. Not a really deserved success in pick and ban.
+		</p>
+
+		<div class="chart lineChart line-winRate">
+			<h3 class="orange">Win rate by patch</h3>
+		</div>
+
+		<p>
+		So, even if masteries give ideas, there is a much more data to collect before saying what masteries make some champions op. It’s not alway as obvious as Tryndamere and the crazy crit mastery of 5.22.
+		</p>
+
+		<h2 class="orange">Picks</h2>
+		<p>
+		In the allstars, on patch 5.22 we saw a lot of Mundo and Malphite. They both scale on HP. Know it’s interesting because HP items did not get a lot of changes in the patch. But they are not the only one. There is probably a lot of others champions op in the current meta that are untested.
+		</p>
+
+		<p>
+		For example, in solo queue, on patch 5.23, Trundle seems to be a good counter to Mundo with 55.53% win rate against him (600+ games). It’s also a flex pick that can be played in top or jungle like Mundo. Maybe teams prefer the hard engage that offer Malphite ult. Or Trundle suffer from his unpopularity. He was 5x less picked before the patch than mundo. So maybe we need 5x more time to see how op he is.
+		</p>
+
+		<div class="chart lineChart line-playRate">
+			<h3 class="orange">Play rate by patch</h3>
+		</div>
+
+		<h2 class="orange">Items</h2>
+		<p>
+		Something else we can note during the all stars is the pick of Jax. The champion have a nice repartition between AD and AP damages (Mundo and Malphite also do lot of magic damages). Maybe it explain why with the new set of AD items and price update of AP items there is not a big return of mid AD assassins. It’s easy to build around HP and armor at the moment. But Jax with his damage repartition (55.1%AD/37.3%AP/7.6True on solo queue data) is able to shut down big tanks like Malphite.
+		</p>
+
+		<p>
+		Items changes seems to orient mid to more item efficient champions. Brand and Anivia are popular picks. With items like Rylai or Rod of ages + Archangel’s staff. Apparently, synergie between items and capacities are more valuable than brut damage in the current mid meta.
+		</p>
+	</div>
+
+	<script type="text/javascript" src="./newSeason.js"></script>
+</body>
+</html>
