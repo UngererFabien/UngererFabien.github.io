@@ -3,7 +3,7 @@ d3.chart('LineChart', {
   initialize: function () {
     var _this = this;
 
-    var margin = {bottom: 50, left: 40, top: 5, right: 150};
+    var margin = {bottom: 50, left: 40, top: 10, right: 150};
 
     var svg = this.base.node();
     this.width = +svg.getAttribute('width');
@@ -26,7 +26,7 @@ d3.chart('LineChart', {
       .scale(this.y)
       .orient('left')
 
-    var svgLine = d3.svg.line()
+    this.svgLine = d3.svg.line()
         .x(function (d) {
           return _this.x(d.x);
         })
@@ -73,14 +73,15 @@ d3.chart('LineChart', {
         },
 
         merge: function () {
-          console.log(this);
+          var chart = this.chart();
+
           this.each(function (line) {
             // console.log(line, this);
             line.previousLength = d3.select(this).select('path').node().getTotalLength();
           });
 
           this.select('path').attr('d', function (line) {
-            return svgLine(line.points);
+            return chart.svgLine(line.points);
           }).style('stroke', function (line) {
             return color(line.id);
           });
@@ -155,6 +156,8 @@ d3.chart('LineChart', {
 
     this.svgXAxis.call(this.xAxis);
     this.svgYAxis.call(this.yAxis);
+
+    this.svgLine.interpolate(data.interpolate || 'step');
 
     return data;
   }

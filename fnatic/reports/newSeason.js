@@ -48,7 +48,7 @@
 	for (var i = 0; i < positions.length; i++) {
 		var pos = positions[i];
 
-		$('.lineChart').append('<label><input class="line-filter '+pos+'" data-pos="'+pos+'" type="checkbox" checked="true">'+pos+'</label>');
+		$('.championLines').append('<label><input class="line-filter '+pos+'" data-pos="'+pos+'" type="checkbox" checked="true">'+pos+'</label>');
 	};
 
 	$('.line-filter').change(function () {
@@ -81,4 +81,62 @@
 
 		drawLines();
 	});
+
+	var minionDamageLines = [];
+
+	for (var i = 0; i <= 3; i++) {
+		var minionDamageLine = {
+			id: 'damageTurret'+i,
+			name: 'Turrets +'+i,
+			points: []
+		}
+
+		for (var j = 0; j <= 3; j++) {
+			minionDamageLine.points.push({
+				x: j,
+				y: (5+(5*i))*j
+			});
+		};
+
+		minionDamageLines.push(minionDamageLine);
+	};
+
+	minionDamageLines.interpolate = 'basis'
+
+	var minionDamageChart = d3.select('.minion-buff-damage')
+		.append('svg')
+		.attr('width', 450)
+		.attr('height', 300)
+		.chart('LineChart');
+
+	minionDamageChart.draw(minionDamageLines);
+
+	var minionDeffLines = [];
+
+	for (var i = 0; i <= 3; i++) {
+		var minionDeffLine = {
+			id: 'deffTurret'+i,
+			name: 'Turrets +'+i,
+			points: []
+		}
+
+		for (var j = 0; j <= 3; j++) {
+			minionDeffLine.points.push({
+				x: j,
+				y: 1+(j*i)
+			});
+		};
+
+		minionDeffLines.push(minionDeffLine);
+	};
+
+	minionDeffLines.interpolate = 'linear'
+
+	var minionDeffChart = d3.select('.minion-buff-deff')
+		.append('svg')
+		.attr('width', 450)
+		.attr('height', 300)
+		.chart('LineChart');
+
+	minionDeffChart.draw(minionDeffLines);
 })();
