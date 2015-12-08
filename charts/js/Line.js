@@ -3,18 +3,18 @@ d3.chart('LineChart', {
   initialize: function () {
     var _this = this;
 
-    var margin = {bottom: 50, left: 30, top: 5, right: 20};
+    var margin = {bottom: 50, left: 40, top: 5, right: 150};
 
-    var svg = this.base.node(),
-      width = +svg.getAttribute('width'),
-      height = +svg.getAttribute('height');
+    var svg = this.base.node();
+    this.width = +svg.getAttribute('width');
+    this.height = +svg.getAttribute('height');
 
     this.x = d3.scale.ordinal()
-      // .range([0, width-margin.left-margin.right]);
-      .rangeRoundPoints([0, width-margin.left-margin.right]);
+      // .range([0, this.width-margin.left-margin.right]);
+      .rangeRoundPoints([0, this.width-margin.left-margin.right]);
 
     this.y = d3.scale.linear()
-      .range([height-margin.bottom-margin.top-1, 0]);
+      .range([this.height-margin.bottom-margin.top-1, 0]);
 
     var color = d3.scale.category20();
 
@@ -41,29 +41,45 @@ d3.chart('LineChart', {
     this.layer('Lines', linesElement, {
 
       dataBind: function (data) {
-        return this.selectAll('.line')
+        return this.selectAll('.gline')
           .data(data, function (line) {
             return line.id;
           });
       },
 
       insert: function (data) {
-        return this.append('path')
+        var g = this.append('g')
+          .attr('class', 'gline');
+
+        g.append('path')
           .attr('class', 'line');
+
+        g.append('text')
+          .attr('class', 'line-label');
+
+        return g;
       },
 
       // define lifecycle events
       events: {
         enter: function () {
-          this.attr('width', 0);
+          var chart = this.chart();
+
+          this.select('path').attr('width', 0);
+
+          this.select('text').text(function (line) {
+            return line.name;
+          }).attr('x', chart.width - margin.right - margin.left + 5);
         },
 
         merge: function () {
+          console.log(this);
           this.each(function (line) {
-            line.previousLength = this.getTotalLength();
+            // console.log(line, this);
+            line.previousLength = d3.select(this).select('path').node().getTotalLength();
           });
 
-          this.attr('d', function (line) {
+          this.select('path').attr('d', function (line) {
             return svgLine(line.points);
           }).style('stroke', function (line) {
             return color(line.id);
@@ -71,18 +87,29 @@ d3.chart('LineChart', {
         },
 
         'merge:transition': function () {
-          this.duration(3000).attrTween('stroke-dasharray', function (line) {
+          var chart = this.chart();
+
+          this.select('path').duration(1500).attrTween('stroke-dasharray', function (line) {
             var l = this.getTotalLength(),
               i = d3.interpolateString(line.previousLength +',' + l, l + ',' + l);
             return function(t) {return i(t)};
           });
+
+          this.select('text').duration(500)
+            .attr('y', function (line) {
+              return chart.y(line.points[line.points.length-1].y) + 5;
+            });
+        },
+
+        exit: function () {
+          this.remove();
         }
       }
     });
 
     this.svgXAxis = this.base.append('g')
       .attr('class', 'axis')
-      .attr('transform', 'translate(' + (margin.left || 0) + ',' + (height-margin.bottom-1) + ')')
+      .attr('transform', 'translate(' + (margin.left || 0) + ',' + (this.height-margin.bottom-1) + ')')
       //.call(this.xAxis);
 
     this.svgYAxis = this.base.append('g')

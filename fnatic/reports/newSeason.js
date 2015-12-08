@@ -11,7 +11,13 @@
 	function getLines (ppt) {
 		var championLines = [];
 
-		_.each(champions, function (champion) {
+		var _champions = _.filter(champions, function (champion) {
+			return positions.indexOf(champion.position) >= 0;
+		});
+
+		console.log(_champions);
+
+		_.each(_champions, function (champion) {
 			var championLine = {
 				id: champion.name+'-'+champion.position,
 				name: champion.name+' - '+champion.position,
@@ -38,6 +44,27 @@
 			line.chart.draw(getLines(line.id));
 		};
 	}
+
+	for (var i = 0; i < positions.length; i++) {
+		var pos = positions[i];
+
+		$('.lineChart').append('<label><input class="line-filter '+pos+'" data-pos="'+pos+'" type="checkbox" checked="true">'+pos+'</label>');
+	};
+
+	$('.line-filter').change(function () {
+		$this = $(this);
+		var pos = $this.attr('data-pos');
+
+		$('.'+pos).prop('checked', $this.is(':checked'));
+
+		if($this.is(':checked')) {
+			positions.push(pos);
+		} else {
+			positions.splice(positions.indexOf(pos), 1);
+		}
+
+		drawLines();
+	});
 
 	d3.json('./json/champions.json', function (err, _champions) {
 		champions = _champions;
