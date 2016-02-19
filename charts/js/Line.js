@@ -47,7 +47,7 @@ d3.chart('LineChart', {
           });
       },
 
-      insert: function (data) {
+      insert: function () {
         var g = this.append('g')
           .attr('class', 'gline');
 
