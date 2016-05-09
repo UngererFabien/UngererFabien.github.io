@@ -1,0 +1,18 @@
+.chart {
+	margin: auto;
+	margin-top: 50px;
+	width: 700px;
+}
+
+.line {
+	stroke: steelblue;
+	stroke-width: 1.5px;
+	fill: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #6e6e6e;
+  shape-rendering: crispEdges;
+}

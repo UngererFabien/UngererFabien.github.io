@@ -1,0 +1,18 @@
+body {
+	font-family: Helvetica;
+	background-color: #101010;
+	font-size: 14px;
+	color: #fff;
+	/*color: #ccc;*/
+}
+
+text {
+	fill: #fff;
+	/*fill: #ccc;;*/
+	fill-opacity: 1;
+}
+
+.split {
+	width: 800px;
+	margin: auto;
+}
