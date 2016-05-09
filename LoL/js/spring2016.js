@@ -1,17 +1,10 @@
 $(function () {
-	// var chart = d3.select('.chart')
- //        .append('svg')
- //        .attr('width', 700)
- //        .attr('height', 300)
- //        .chart('LineChart');
 
     function filterGolds (games, attr) {
     	return _.where(games, attr);
     }
 
     function getGamesAverageGolds (games) {
-    	console.log(games);
-
     	var points = [];
 
     	_.each(games, function (game) {
@@ -75,14 +68,6 @@ $(function () {
     d3.json('./datasets/spring2016Golds.json', function (err, teams) {
     	if(err) return false;
 
-    	// var games = teams['FNC'].games,
-    	// 	golds = games[0].golds;
-
-    	// chart.draw(getTeamAverageGolds(teams['FNC'], 'FNC'));
-    	// chart.draw(getTeamAverageGolds(teams['H2K'], 'H2K'));
-    	// chart.draw(getTeamAverageGolds(teams['EL'], 'EL'));
-    	// chart.draw(getTeamAverageGolds(teams['GIA'], 'GIA'));
-
     	_.each(teams, function (team, name) {
 
     		var container = $('<div class="team-container"></div>');
@@ -102,11 +87,6 @@ $(function () {
 
 		    chart.draw(getTeamAverageGolds(team, name));
     	});
-
-    	// chart.draw([{
-    	// 	points: golds,
-    	// 	id: 'FNC_1',
-    	// 	name: 'FNC'
-    	// }]);
     });
+    
 });
