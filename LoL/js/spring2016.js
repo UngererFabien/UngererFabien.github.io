@@ -65,10 +65,20 @@ $(function () {
     	return lines;
     }
 
-    d3.json('./datasets/spring2016Golds.json', function (err, teams) {
+    d3.json('../datasets/'+window.dataset+'.json', function (err, teams) {
     	if(err) return false;
 
+    	var overallLines = [],
+    		allGames = [];
+
     	_.each(teams, function (team, name) {
+    		overallLines.push({
+    			points: getGamesAverageGolds(team.games),
+    			id: 'overall_'+name,
+    			name: name
+    		});
+
+    		// allGames.push(team.games);
 
     		var container = $('<div class="team-container"></div>');
 
@@ -85,8 +95,26 @@ $(function () {
 		        .attr('height', 300)
 		        .chart('LineChart');
 
-		    chart.draw(getTeamAverageGolds(team, name));
+		    var teamLines = getTeamAverageGolds(team, name);
+
+		    chart.draw(teamLines);
     	});
+
+    	// allGames = _.flatten(allGames);
+
+    	// overallLines.push({
+    	// 	points: getGamesAverageGolds(allGames),
+    	// 	id: 'overall_all',
+    	// 	name: 'ALL'
+    	// });
+
+    	var overallChart = d3.select('#overallChart')
+		    .append('svg')
+		    .attr('width', 700)
+		    .attr('height', 700)
+		    .chart('LineChart');
+
+		overallChart.draw(overallLines);
     });
     
 });

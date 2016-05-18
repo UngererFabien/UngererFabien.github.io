@@ -6,10 +6,25 @@ body {
 	/*color: #ccc;*/
 }
 
+footer {
+	width: 800px;
+	margin: auto;
+	text-align: center;
+}
+
 text {
 	fill: #fff;
 	/*fill: #ccc;;*/
 	fill-opacity: 1;
+}
+
+a {
+	color: #fff;
+}
+
+.content {
+	width: 800px;
+	margin: auto;
 }
 
 .split {
