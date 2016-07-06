@@ -3,11 +3,11 @@ $(function () {
 		var maxValues = {
 		    className: 'MAX',
 			axes: [
-				{axis: 'Mid', value: 27}, 
-			    {axis: 'ADC', value: 27}, 
-			    {axis: 'Support', value: 27},  
-			    {axis: 'Jungle', value: 27},  
-			    {axis: 'Top', value: 27}
+				{axis: 'Mid', value: 25}, 
+			    {axis: 'ADC', value: 25}, 
+			    {axis: 'Support', value: 25},  
+			    {axis: 'Jungle', value: 25},  
+			    {axis: 'Top', value: 25}
 			]
 		}
 
