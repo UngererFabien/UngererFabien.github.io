@@ -4,6 +4,10 @@
 	width: 700px;
 }
 
+.chart.radar {
+	width: 620px;
+}
+
 .line {
 	stroke: steelblue;
 	stroke-width: 1.5px;
@@ -19,4 +23,18 @@
   fill: none;
   stroke: #6e6e6e;
   shape-rendering: crispEdges;
+}
+
+.radar-chart .area {
+  fill-opacity: 0.3;
+}
+.radar-chart.focus .area {
+  fill-opacity: 0.1;
+}
+.radar-chart.focus .area.focused {
+  fill-opacity: 0.8;
+}
+
+.radar .MAX {
+	display: none;
 }
