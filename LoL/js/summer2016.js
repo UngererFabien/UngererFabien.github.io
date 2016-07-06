@@ -3,11 +3,11 @@ $(function () {
 		var maxValues = {
 		    className: 'MAX',
 			axes: [
-				{axis: 'Mid', value: 28}, 
-			    {axis: 'ADC', value: 28}, 
-			    {axis: 'Support', value: 28},  
-			    {axis: 'Jungle', value: 28},  
-			    {axis: 'Top', value: 28}
+				{axis: 'Mid', value: 27}, 
+			    {axis: 'ADC', value: 27}, 
+			    {axis: 'Support', value: 27},  
+			    {axis: 'Jungle', value: 27},  
+			    {axis: 'Top', value: 27}
 			]
 		}
 
@@ -47,8 +47,11 @@ $(function () {
 
     		$('.js-viz').append(container);
 
-			var chart = RadarChart.chart(),
-				cfg = chart.config();
+			var chart = RadarChart.chart();
+			
+			chart.config({minValue: 12})
+
+			var cfg = chart.config();
 
 			var chartData = [
 				maxValues,
