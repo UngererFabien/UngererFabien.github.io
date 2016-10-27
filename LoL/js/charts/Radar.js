@@ -3,7 +3,7 @@ var RadarChart = {
     containerClass: 'radar-chart',
     w: 600,
     h: 600,
-    factor: 0.95,
+    factor: 0.80,
     factorLegend: 1,
     levels: 3,
     levelTick: false,

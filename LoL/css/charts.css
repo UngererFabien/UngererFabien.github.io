@@ -4,8 +4,9 @@
 	width: 700px;
 }
 
-.chart.radar {
-	width: 620px;
+.radar {
+	margin: auto;
+	width: 420px;
 }
 
 .line {
