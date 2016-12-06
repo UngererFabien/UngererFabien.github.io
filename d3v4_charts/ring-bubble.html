@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ring to Bubbles Chart</title>
+	<script src="https://d3js.org/d3.v4.js"></script>
+
+	<style type="text/css">
+		.chart {
+			margin: auto;
+			width: 1000px;
+			height: 1000px;
+		}
+	</style>
+</head>
+<body>
+	<div class="chart"></div>
+
+	<script type="text/javascript">
+		// Chart script
+
+		var RingBubble = function (el) {
+			var margin = {top: 0, right: 0, bottom: 0, left: 0},
+				containerNode = d3.select(el).node();
+
+			var width =  containerNode.clientWidth - margin.left - margin.right,
+    			height = containerNode.clientHeight - margin.top - margin.bottom;
+
+			var svg = d3.select(el).append('svg')
+				.attr('width', width + margin.left + margin.right)
+    			.attr('height', height + margin.top + margin.bottom);
+
+    		var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+    		var pack = d3.pack()
+    			.size([width, height])
+    			.padding(1.5);
+
+			this.render = function (data) {
+				var hierarchy = d3.hierarchy(data)
+					.sum(d => d.val);
+
+				var circles = svg.selectAll('.g-circles')
+					.data(pack(hierarchy).leaves())
+					.enter().append('g')
+						.attr('class', 'g-circles')
+						.attr('transform', d => 'translate('+d.x+','+d.y+')');
+
+				circles.append('circle')
+					.attr('r', d => d.r)
+					.attr('fill', d => color(d.data.id));
+
+				return this;
+			}
+
+			return this;
+		}
+	</script>
+
+	<script type="text/javascript">
+		// Random Data script
+		function rData (nbChildren) {
+			var node = {children: []};
+			
+			function populateNode () {
+				for (var i = 0; i < nbChildren; i++) {
+					node.children.push({
+						id: 'a_'+i,
+						val: Math.round(Math.random()*1000)+i*100
+					});
+				}
+			}
+
+			populateNode();
+
+			console.log('rData -->', node)
+
+			return node;
+		}
+
+		new RingBubble('.chart').render(rData(10));
+	</script>
+</body>
+</html>
