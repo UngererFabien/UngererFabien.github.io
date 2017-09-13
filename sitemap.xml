@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://guysake.com/posts/the-metagame/</loc>
+    <lastmod>2017-09-13T17:33:09+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/posts/players-rating/</loc>
+    <lastmod>2017-03-25T14:02:07+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/posts/performance-rating/</loc>
+    <lastmod>2017-03-07T12:15:35+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/posts/ga-vs-zz/</loc>
+    <lastmod>2017-02-19T14:22:04+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/</loc>
+    <lastmod>2017-09-13T17:33:09+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/posts/</loc>
+    <lastmod>2017-09-13T17:33:09+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://guysake.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

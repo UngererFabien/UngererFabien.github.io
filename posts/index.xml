@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on GuySake</title>
+    <link>http://guysake.com/posts/</link>
+    <description>Recent content in Posts on GuySake</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 13 Sep 2017 17:33:09 +0200</lastBuildDate>
+    
+	<atom:link href="http://guysake.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Metagame</title>
+      <link>http://guysake.com/posts/the-metagame/</link>
+      <pubDate>Wed, 13 Sep 2017 17:33:09 +0200</pubDate>
+      
+      <guid>http://guysake.com/posts/the-metagame/</guid>
+      <description>Nearly a year ago I did a workshop at York University about game analysis in esport. One of the questions that were asked to Luis and I was: How do you define the meta? And we struggled to answer. I remember Luis saying that the meta could change from a match to another so I want to try answer this question here. Simply put, the meta represents “the strongest elements of a game to achieve victory”.</description>
+    </item>
+    
+    <item>
+      <title>Players performance rating in League</title>
+      <link>http://guysake.com/posts/players-rating/</link>
+      <pubDate>Sat, 25 Mar 2017 14:02:07 +0200</pubDate>
+      
+      <guid>http://guysake.com/posts/players-rating/</guid>
+      <description>Last week Riot published this article. While the damage rating part is fine, I think the method for their overall ranking is really too subjective and mathematically questionable.
+In my previous article I wrote about stats importance ranking. What I do is that I give all the stats to a machine learning algorithm and it returns me coefficients of importance for each stat. What Riot does is ask pro players and analyst what stats they think are the most important.</description>
+    </item>
+    
+    <item>
+      <title>Performance rating in League</title>
+      <link>http://guysake.com/posts/performance-rating/</link>
+      <pubDate>Tue, 07 Mar 2017 12:15:35 +0200</pubDate>
+      
+      <guid>http://guysake.com/posts/performance-rating/</guid>
+      <description>When we try to evaluate teams or player performances we tend to look at very specific information. First blood rate, first tower rate, farm efficiency, kills, death … etc. But we are blind on the real value of these stats toward a team or player win probabilities. Usually you are going to see something like “Win rate goes up to 80% after getting first Baron Kill”. That’s a nice stat but you’ve learn nothing new, Baron Buff and Gold help close the game.</description>
+    </item>
+    
+    <item>
+      <title>Guardian Angel versus Zz’Rot Portal</title>
+      <link>http://guysake.com/posts/ga-vs-zz/</link>
+      <pubDate>Sun, 19 Feb 2017 14:22:04 +0200</pubDate>
+      
+      <guid>http://guysake.com/posts/ga-vs-zz/</guid>
+      <description>Guardian Angel has been quite popular on top lane and jungle in the first weeks of EU LCS. Indeed it’s been purchased 62 times when Zz’Rot Portal was purchased only 6 time in 63 games. Which is a huge difference for such similar items.
+The combat stats are worth 91.3% of Zz’Rot Portal’s price and only 82.75% for the Guardian Angel. This makes Zz’Rot a way better item if we look only at the combat stats.</description>
+    </item>
+    
+  </channel>
+</rss>
